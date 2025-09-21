@@ -275,3 +275,4 @@ test('PlanetSportBet – American Football Live Tracker Check', async ({ page })
   fs.writeFileSync('nfl-events-results.json', JSON.stringify(eventResults, null, 2));
   console.log('📄 Individual event results saved to nfl-events-results.json');
 });
+# PSG NFL Test - Sun Sep 21 17:18:56 BST 2025
