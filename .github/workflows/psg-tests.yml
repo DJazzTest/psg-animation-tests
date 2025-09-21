@@ -1,0 +1,79 @@
+name: PSG Animation Tests - Manual Run
+
+on:
+  workflow_dispatch: # Allow manual triggering
+  push:
+    branches: [ master ]
+    paths:
+      - 'tests/specs/planetsports/**'
+      - 'scripts/**'
+
+jobs:
+  psg-tests:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+        cache: 'npm'
+        
+    - name: Install dependencies
+      run: npm ci
+      
+    - name: Install Playwright browsers
+      run: npx playwright install --with-deps chromium
+      
+    - name: Run PSG Football Test
+      run: |
+        echo "⚽ Running PSG Football Test..."
+        npx playwright test tests/specs/planetsports/PSG.Football.Animations.spec.ts --project=chromium --reporter=json > football-results.json || true
+        
+    - name: Run PSG NFL Test
+      run: |
+        echo "🏈 Running PSG NFL Test..."
+        npx playwright test tests/specs/planetsports/PSG.NFL.Animations.spec.ts --project=chromium --reporter=json > nfl-results.json || true
+        
+    - name: Run PSG Tennis Test
+      run: |
+        echo "🎾 Running PSG Tennis Test..."
+        npx playwright test tests/specs/planetsports/PSG.Tennis.Animations.Spec.ts --project=chromium --reporter=json > tennis-results.json || true
+        
+    - name: Run PSG Cricket Test
+      run: |
+        echo "🏏 Running PSG Cricket Test..."
+        npx playwright test tests/specs/planetsports/PSG.cricket.Animations.spec.ts --project=chromium --reporter=json > cricket-results.json || true
+        
+    - name: Generate Combined Report
+      run: |
+        echo "📊 Generating combined PSG test report..."
+        node scripts/generate-report.js || echo "Report generation completed with issues"
+        
+    - name: Send Email Report
+      if: always() # Run even if tests fail
+      uses: dawidd6/action-send-mail@v3
+      with:
+        server_address: smtp.gmail.com
+        server_port: 587
+        username: ${{ secrets.EMAIL_USERNAME }}
+        password: ${{ secrets.EMAIL_PASSWORD }}
+        subject: "PSG Animation Tests Report - GitHub Actions Run #${{ github.run_number }}"
+        to: davidjarrett001@gmail.com
+        from: davidjarrett001@gmail.com
+        body: file://test-report-email.html
+        
+    - name: Upload Test Results
+      uses: actions/upload-artifact@v4
+      if: always()
+      with:
+        name: psg-test-results-${{ github.run_number }}
+        path: |
+          test-results/
+          test-results-html/
+          test-report-email.html
+          *-results.json
+          *-events-results.json
