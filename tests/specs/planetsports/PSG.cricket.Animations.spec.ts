@@ -287,3 +287,4 @@ test('PlanetSportBet – Cricket Tab Animation Check', async ({ page }) => {
   fs.writeFileSync('cricket-events-results.json', JSON.stringify(eventResults, null, 2));
   console.log('📄 Individual event results saved to cricket-events-results.json');
 });
+# PSG Cricket Test - Sun Sep 21 17:19:14 BST 2025
