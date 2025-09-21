@@ -18,7 +18,7 @@ export default defineConfig({
       name: 'chromium-slow',
       use: {
         ...devices['Desktop Chrome'],
-        headless: false,
+        headless: true, // ✅ Fixed: must be true for CI
         launchOptions: { slowMo: 400 }
       },
     },
