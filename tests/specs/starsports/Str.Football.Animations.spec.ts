@@ -1,11 +1,19 @@
 import { test, expect } from '@playwright/test';
 
-test('PlanetSportBet – Football Animation Check', async ({ page }) => {
-  console.log('🚀 Starting Football Animation Test...');
+test('StarSports – Football Animation Check', async ({ page }) => {
+  test.setTimeout(180000); // 3 minutes for comprehensive testing
+  console.log('🚀 Starting StarSports Football Animation Test...');
   
-  // 1) Land on PlanetSportBet and handle initial setup
-  await page.goto('https://planetsportbet.com/');
-  await page.getByRole('button', { name: /Allow all/i }).click();
+  // 1) Land on StarSports and handle initial setup
+  await page.goto('https://starsports.bet/');
+  
+  // Handle cookie consent
+  try {
+    await page.getByRole('button', { name: /Allow all/i }).click({ timeout: 5000 });
+    console.log('✅ Cookie consent handled');
+  } catch (error) {
+    console.log('ℹ️ No cookie consent popup found');
+  }
   
   // Handle close icon with error handling
   try {
@@ -16,13 +24,13 @@ test('PlanetSportBet – Football Animation Check', async ({ page }) => {
   }
   
   // 2) Navigate to Football section
-  console.log('🏈 Navigating to Football section...');
+  console.log('⚽ Navigating to Football section...');
   await page.locator('[data-test="popular"]').getByRole('link', { name: 'Football' }).click();
   await page.waitForTimeout(2000);
   
   // Define time periods to test
   const timePeriods = ['Today', 'Tomorrow', 'Weekend', 'Current Week'];
-  const results: {event: string, result: string, timePeriod: string, league: string}[] = [];
+      const results: {event: string, result: string, timePeriod: string, league: string, failureReason?: string}[] = [];
   let totalEventsTested = 0;
   const maxTotalEvents = 40; // Test up to 40 events across all periods
   
@@ -185,15 +193,15 @@ test('PlanetSportBet – Football Animation Check', async ({ page }) => {
               } else {
                 console.log(`⚠️ WARNING: iframe content frame not accessible (may be cross-origin)`);
               }
-            } else {
-              console.log(`❌ FAIL: Live tracker expanded but no animation for — ${title}`);
-              console.log(`   🔴 Description: Live tracker window expanded but animation iframe failed to load`);
-              console.log(`   📝 Reason: iframe src is missing or incorrect (src: ${iframeSrc}, visible: ${isIframeVisible})`);
-              console.log(`   ⚽ Match: ${title}`);
-              console.log(`   🏆 Competition: ${league}`);
-              console.log(`   📅 Time Period: ${timePeriod}`);
-              console.log(`   🔧 Technical: Src contains widgets.thesports01.com: ${iframeSrc?.includes('widgets.thesports01.com')}`);
-            }
+                } else {
+                  console.log(`❌ FAIL: Live tracker expanded but no animation for — ${title}`);
+                  console.log(`   🔴 Description: Live tracker window expanded but animation iframe failed to load`);
+                  console.log(`   📝 Reason: iframe src is missing or incorrect (src: ${iframeSrc}, visible: ${isIframeVisible})`);
+                  console.log(`   ⚽ Match: ${title}`);
+                  console.log(`   🏆 Competition: ${league}`);
+                  console.log(`   📅 Time Period: ${timePeriod}`);
+                  console.log(`   🔧 Technical: Src contains widgets.thesports01.com: ${iframeSrc?.includes('widgets.thesports01.com')}`);
+                }
             
             // Wait to see the animation load and play
             console.log(`⏳ Waiting 5 seconds to observe 3D football animation...`);
@@ -217,12 +225,13 @@ test('PlanetSportBet – Football Animation Check', async ({ page }) => {
             console.log(`   📅 Time Period: ${timePeriod}`);
           }
           
-          results.push({ 
-            event: title, 
-            result: animPassed ? 'PASS' : 'FAIL', 
-            timePeriod: timePeriod,
-            league: league
-          });
+              results.push({ 
+                event: title, 
+                result: animPassed ? 'PASS' : 'FAIL', 
+                timePeriod: timePeriod,
+                league: league,
+                failureReason: animPassed ? undefined : `Live tracker expanded but animation iframe failed to load (src: ${iframeSrc}, visible: ${isIframeVisible})`
+              });
           
           totalEventsTested++;
           
@@ -257,13 +266,13 @@ test('PlanetSportBet – Football Animation Check', async ({ page }) => {
   }
   
   // Generate comprehensive report
-  console.log('\n🧪 === FOOTBALL ANIMATION TEST RESULTS ===');
+  console.log('\n🧪 === STARSPORTS FOOTBALL ANIMATION TEST RESULTS ===');
   const passCount = results.filter(r => r.result === 'PASS').length;
   const failCount = results.filter(r => r.result === 'FAIL').length;
   const errorCount = results.filter(r => r.result === 'ERROR').length;
   const passRate = totalEventsTested > 0 ? Math.round((passCount / totalEventsTested) * 100) : 0;
   
-  console.log(`📊 Total Football Events Tested: ${totalEventsTested}`);
+  console.log(`📊 Total StarSports Football Events Tested: ${totalEventsTested}`);
   console.log(`✅ Events with Animations (PASS): ${passCount}`);
   console.log(`❌ Events without Animations (FAIL): ${failCount}`);
   console.log(`🚨 Events with Errors (ERROR): ${errorCount}`);
@@ -293,27 +302,5 @@ test('PlanetSportBet – Football Animation Check', async ({ page }) => {
   console.log('\n📋 === DETAILED RESULTS ===');
   results.forEach(r => console.log(`${r.result}: ${r.event} (${r.timePeriod}, ${r.league})`));
   
-      console.log('\n🏁 Football Animation Test completed!');
-      
-      // Output individual event results to a JSON file for report generation
-      const fs = require('fs');
-      const eventResults = {
-        testName: 'PlanetSportBet – Football Animation Check',
-        sport: 'Football (PSG)',
-        totalEvents: totalEventsTested,
-        passedEvents: results.filter(r => r.result === 'PASS').length,
-        failedEvents: results.filter(r => r.result === 'FAIL').length,
-        errorEvents: results.filter(r => r.result === 'ERROR').length,
-        events: results.map(r => ({
-          event: r.event,
-          result: r.result,
-          timePeriod: r.timePeriod,
-          league: r.league,
-          failureReason: r.result === 'FAIL' ? 'Animation iframe failed to load' : 
-                        r.result === 'ERROR' ? 'Test execution error' : null
-        }))
-      };
-      
-      fs.writeFileSync('football-events-results.json', JSON.stringify(eventResults, null, 2));
-      console.log('📄 Individual event results saved to football-events-results.json');
-    });
+  console.log('\n🏁 StarSports Football Animation Test completed!');
+});

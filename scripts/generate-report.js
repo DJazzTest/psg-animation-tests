@@ -5,7 +5,8 @@ const path = require('path');
 function readTestResults() {
   let allResults = {
     stats: { total: 0, passed: 0, failed: 0, skipped: 0 },
-    tests: []
+    tests: [],
+    individualEvents: []
   };
   
   try {
@@ -35,11 +36,11 @@ function readTestResults() {
               spec.tests.forEach(test => {
                 const testResult = test.results?.[0];
                 allResults.tests.push({
-                  title: test.title,
+                  title: spec.title, // Use spec.title instead of test.title
                   status: testResult?.status || 'unknown',
                   duration: testResult?.duration || 0,
                   error: testResult?.error?.message || null,
-                  sport: extractSportFromTitle(test.title),
+                  sport: extractSportFromTitle(spec.title),
                   file: spec.file
                 });
               });
@@ -48,6 +49,26 @@ function readTestResults() {
         }
       });
     }
+    
+    // Read individual event results from separate JSON files
+    const eventFiles = [
+      'football-events-results.json',
+      'tennis-events-results.json', 
+      'cricket-events-results.json',
+      'nfl-events-results.json'
+    ];
+    
+    eventFiles.forEach(file => {
+      if (fs.existsSync(file)) {
+        try {
+          const eventData = JSON.parse(fs.readFileSync(file, 'utf8'));
+          allResults.individualEvents.push(eventData);
+          console.log(`📊 Loaded ${eventData.totalEvents} events from ${file}`);
+        } catch (error) {
+          console.log(`⚠️ Could not read ${file}:`, error.message);
+        }
+      }
+    });
     
   } catch (error) {
     console.error('Error reading test results:', error.message);
@@ -58,11 +79,96 @@ function readTestResults() {
 
 function extractSportFromTitle(title) {
   if (!title) return 'Unknown';
-  if (title.includes('Football')) return 'Football';
-  if (title.includes('Tennis')) return 'Tennis';
-  if (title.includes('Cricket')) return 'Cricket';
-  if (title.includes('NFL') || title.includes('American Football')) return 'NFL';
+  
+  console.log('Extracting sport from title:', title);
+  
+  // Check for specific test names first (most specific)
+  if (title.includes('PlanetSportBet – Football Animation Check')) return 'Football (PSG)';
+  if (title.includes('PlanetSportBet – Tennis Tab Animation Check')) return 'Tennis (PSG)';
+  if (title.includes('PlanetSportBet – Cricket Tab Animation Check')) return 'Cricket (PSG)';
+  if (title.includes('PlanetSportBet – American Football Live Tracker Check')) return 'NFL (PSG)';
+  
+  // Check for StarSports test names
+  if (title.includes('StarSports – Football Animation Check')) return 'Football (StarSports)';
+  if (title.includes('StarSports – Tennis Tab Animation Check')) return 'Tennis (StarSports)';
+  if (title.includes('StarSports – Cricket Tab Animation Check')) return 'Cricket (StarSports)';
+  if (title.includes('StarSports – American Football Live Tracker Check')) return 'NFL (StarSports)';
+  
+  // Check for general sport keywords
+  if (title.includes('Football') || title.includes('football')) return 'Football';
+  if (title.includes('Tennis') || title.includes('tennis')) return 'Tennis';
+  if (title.includes('Cricket') || title.includes('cricket')) return 'Cricket';
+  if (title.includes('NFL') || title.includes('American Football') || title.includes('American football')) return 'NFL';
+  
+  console.log('No sport match found for:', title);
   return 'Unknown';
+}
+
+function extractTeamFromTitle(title) {
+  if (!title) return 'N/A';
+  
+  console.log('Extracting team from title:', title);
+  
+  // Extract team names from test titles
+  // Look for patterns like "Team A vs Team B" or "Team A vs Team BIn Play"
+  const vsMatch = title.match(/([^vs]+)\s+vs\s+([^vs]+)/i);
+  if (vsMatch) {
+    const team1 = vsMatch[1].trim()
+      .replace(/In Play$/, '')
+      .replace(/Today.*$/, '')
+      .replace(/Tomorrow.*$/, '')
+      .replace(/Weekend.*$/, '')
+      .replace(/Current Week.*$/, '')
+      .replace(/\d{2} Sep \d{2}:\d{2}$/, '')
+      .replace(/\d{2}:\d{2}$/, '');
+    const team2 = vsMatch[2].trim()
+      .replace(/In Play$/, '')
+      .replace(/Today.*$/, '')
+      .replace(/Tomorrow.*$/, '')
+      .replace(/Weekend.*$/, '')
+      .replace(/Current Week.*$/, '')
+      .replace(/\d{2} Sep \d{2}:\d{2}$/, '')
+      .replace(/\d{2}:\d{2}$/, '');
+    const result = `${team1} vs ${team2}`;
+    console.log('Extracted teams:', result);
+    return result;
+  }
+  
+  // Look for single team names
+  const singleTeamMatch = title.match(/([A-Za-z\s]+)(?:\s+\(Today\)|\s+\(Tomorrow\)|\s+In Play)/);
+  if (singleTeamMatch) {
+    const result = singleTeamMatch[1].trim();
+    console.log('Extracted single team:', result);
+    return result;
+  }
+  
+  console.log('No team match found for:', title);
+  return 'N/A';
+}
+
+function extractDetailedFailureInfo(test) {
+  if (test.status !== 'failed' && test.status !== 'timedOut') return 'N/A';
+  
+  const sport = test.sport;
+  const team = extractTeamFromTitle(test.title);
+  const error = test.error || 'Unknown error';
+  
+  // Create detailed failure description based on sport
+  let failureDescription = '';
+  
+  if (sport.includes('Football')) {
+    failureDescription = `Football match "${team}" failed: ${error}`;
+  } else if (sport.includes('Tennis')) {
+    failureDescription = `Tennis match "${team}" failed: ${error}`;
+  } else if (sport.includes('Cricket')) {
+    failureDescription = `Cricket match "${team}" failed: ${error}`;
+  } else if (sport.includes('NFL')) {
+    failureDescription = `NFL team "${team}" failed: ${error}`;
+  } else {
+    failureDescription = `${sport} test "${team}" failed: ${error}`;
+  }
+  
+  return failureDescription;
 }
 
 function generateEmailReport(results) {
@@ -80,28 +186,62 @@ function generateEmailReport(results) {
   const statusColor = results.stats.failed === 0 ? '#28a745' : '#dc3545';
   const statusIcon = results.stats.failed === 0 ? '✅' : '❌';
   
-  // Group tests by sport
-  const testsBySport = results.tests.reduce((acc, test) => {
-    if (!acc[test.sport]) {
-      acc[test.sport] = { passed: 0, failed: 0, total: 0, tests: [] };
+  // Group tests by sport (including individual events)
+  const testsBySport = {};
+  
+  // First, add individual event data
+  results.individualEvents.forEach(eventData => {
+    if (!testsBySport[eventData.sport]) {
+      testsBySport[eventData.sport] = { 
+        passed: 0, 
+        failed: 0, 
+        total: 0, 
+        tests: [],
+        events: []
+      };
     }
-    acc[test.sport].total++;
+    testsBySport[eventData.sport].total += eventData.totalEvents;
+    testsBySport[eventData.sport].passed += eventData.passedEvents;
+    testsBySport[eventData.sport].failed += eventData.failedEvents;
+    testsBySport[eventData.sport].events = eventData.events;
+  });
+  
+  // Then add overall test data
+  results.tests.forEach(test => {
+    if (!testsBySport[test.sport]) {
+      testsBySport[test.sport] = { 
+        passed: 0, 
+        failed: 0, 
+        total: 0, 
+        tests: [],
+        events: []
+      };
+    }
+    testsBySport[test.sport].total++;
     if (test.status === 'passed') {
-      acc[test.sport].passed++;
-    } else if (test.status === 'failed') {
-      acc[test.sport].failed++;
+      testsBySport[test.sport].passed++;
+    } else if (test.status === 'failed' || test.status === 'timedOut') {
+      testsBySport[test.sport].failed++;
     }
-    acc[test.sport].tests.push(test);
-    return acc;
-  }, {});
+    testsBySport[test.sport].tests.push(test);
+  });
   
   let sportSummary = '';
   Object.entries(testsBySport).forEach(([sport, data]) => {
     const sportPassRate = data.total > 0 ? ((data.passed / data.total) * 100).toFixed(1) : 0;
     const sportIcon = data.failed === 0 ? '✅' : '❌';
+    
+        // Get sport emoji and description
+        let sportEmoji = '🏆';
+        let sportDescription = sport;
+        if (sport.includes('Football')) { sportEmoji = '⚽'; sportDescription = sport; }
+        else if (sport.includes('Tennis')) { sportEmoji = '🎾'; sportDescription = sport; }
+        else if (sport.includes('Cricket')) { sportEmoji = '🏏'; sportDescription = sport; }
+        else if (sport.includes('NFL')) { sportEmoji = '🏈'; sportDescription = sport; }
+    
     sportSummary += `
       <tr>
-        <td><strong>${sport}</strong></td>
+        <td><strong>${sportEmoji} ${sportDescription}</strong></td>
         <td>${data.total}</td>
         <td>${data.passed}</td>
         <td>${data.failed}</td>
@@ -110,22 +250,66 @@ function generateEmailReport(results) {
       </tr>`;
   });
   
-  // Get failed tests details
-  const failedTests = results.tests.filter(test => test.status === 'failed');
-  let failedTestsDetails = '';
-  if (failedTests.length > 0) {
-    failedTestsDetails = `
-    <h3 style="color: #dc3545;">❌ Failed Tests Details</h3>
-    <ul>`;
-    failedTests.forEach(test => {
-      failedTestsDetails += `
-      <li>
-        <strong>${test.title}</strong><br>
-        <em>Error:</em> ${test.error || 'Unknown error'}<br>
-        <em>Duration:</em> ${(test.duration / 1000).toFixed(2)}s
-      </li>`;
+  // Get failed tests details (including individual event failures)
+  const failedTests = results.tests.filter(test => test.status === 'failed' || test.status === 'timedOut');
+  const failedEvents = [];
+  
+  // Collect failed individual events
+  results.individualEvents.forEach(eventData => {
+    eventData.events.forEach(event => {
+      if (event.result === 'FAIL' || event.result === 'ERROR') {
+        failedEvents.push({
+          sport: eventData.sport,
+          event: event.event,
+          result: event.result,
+          failureReason: event.failureReason,
+          additionalInfo: event.tournament || event.league || event.timePeriod || 'N/A'
+        });
+      }
     });
-    failedTestsDetails += `</ul>`;
+  });
+  
+  let failedTestsDetails = '';
+  if (failedTests.length > 0 || failedEvents.length > 0) {
+    failedTestsDetails = `
+    <h3 style="color: #dc3545;">❌ Failed Tests & Events Details</h3>
+    <table style="width: 100%; border-collapse: collapse; margin: 20px 0;">
+      <thead>
+        <tr style="background: #f8f9fa;">
+          <th style="padding: 8px; border: 1px solid #dee2e6; text-align: left;">Sport</th>
+          <th style="padding: 8px; border: 1px solid #dee2e6; text-align: left;">Test/Event</th>
+          <th style="padding: 8px; border: 1px solid #dee2e6; text-align: left;">Team/Match</th>
+          <th style="padding: 8px; border: 1px solid #dee2e6; text-align: left;">Detailed Failure Description</th>
+        </tr>
+      </thead>
+      <tbody>`;
+    
+    // Add failed individual events first
+    failedEvents.forEach(event => {
+      failedTestsDetails += `
+        <tr>
+          <td style="padding: 8px; border: 1px solid #dee2e6;"><strong>${event.sport}</strong></td>
+          <td style="padding: 8px; border: 1px solid #dee2e6;"><strong>${event.event}</strong></td>
+          <td style="padding: 8px; border: 1px solid #dee2e6;">${event.event}</td>
+          <td style="padding: 8px; border: 1px solid #dee2e6; color: #dc3545;">${event.failureReason} (${event.additionalInfo})</td>
+        </tr>`;
+    });
+    
+    // Add failed overall tests
+    failedTests.forEach(test => {
+      const detailedFailure = extractDetailedFailureInfo(test);
+      failedTestsDetails += `
+        <tr>
+          <td style="padding: 8px; border: 1px solid #dee2e6;"><strong>${test.sport}</strong></td>
+          <td style="padding: 8px; border: 1px solid #dee2e6;"><strong>${test.title}</strong></td>
+          <td style="padding: 8px; border: 1px solid #dee2e6;">N/A</td>
+          <td style="padding: 8px; border: 1px solid #dee2e6; color: #dc3545;">${detailedFailure}</td>
+        </tr>`;
+    });
+    
+    failedTestsDetails += `
+      </tbody>
+    </table>`;
   }
   
   const html = `
@@ -196,6 +380,22 @@ function generateEmailReport(results) {
                 ${sportSummary}
             </tbody>
         </table>
+        
+        <h2>🧪 Tests Executed</h2>
+        <div style="background: #f8f9fa; padding: 15px; border-radius: 8px; margin: 20px 0;">
+            <h3>Test Coverage Summary:</h3>
+            <ul>
+                ${Object.entries(testsBySport).map(([sport, data]) => {
+                  let sportEmoji = '🏆';
+                  if (sport === 'Football') sportEmoji = '⚽';
+                  else if (sport === 'Tennis') sportEmoji = '🎾';
+                  else if (sport === 'Cricket') sportEmoji = '🏏';
+                  else if (sport === 'NFL') sportEmoji = '🏈';
+                  
+                  return `<li><strong>${sportEmoji} ${sport}</strong>: ${data.total} test(s) - ${data.passed} passed, ${data.failed} failed</li>`;
+                }).join('')}
+            </ul>
+        </div>
         
         ${failedTestsDetails}
         

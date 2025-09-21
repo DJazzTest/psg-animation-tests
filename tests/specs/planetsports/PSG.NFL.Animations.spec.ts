@@ -24,6 +24,7 @@ test('PlanetSportBet – American Football Live Tracker Check', async ({ page })
   let totalFailCount = 0;
   const allPassedEvents: string[] = [];
   const allFailedEvents: string[] = [];
+  const results: {event: string, result: string, tab: string, failureReason?: string}[] = [];
   
   for (const tabName of timeTabs) {
     console.log(`\n🔍 Testing ${tabName} tab...`);
@@ -161,16 +162,34 @@ test('PlanetSportBet – American Football Live Tracker Check', async ({ page })
             console.log(`✅ PASS: Live tracker animation found — ${eventTitle}`);
             tabPassCount++;
             allPassedEvents.push(`${eventTitle} (${tabName})`);
+            results.push({ 
+              event: eventTitle, 
+              result: 'PASS', 
+              tab: tabName,
+              failureReason: null
+            });
           } else {
             console.log(`❌ FAIL: No live tracker animation — ${eventTitle}`);
             tabFailCount++;
             allFailedEvents.push(`${eventTitle} (${tabName})`);
+            results.push({ 
+              event: eventTitle, 
+              result: 'FAIL', 
+              tab: tabName,
+              failureReason: 'No live tracker animation found'
+            });
           }
           
         } catch (error) {
           console.log(`❌ FAIL: Error testing ${eventTitle} — ${error.message}`);
           tabFailCount++;
           allFailedEvents.push(`${eventTitle} (${tabName}) - Error: ${error.message}`);
+          results.push({ 
+            event: eventTitle, 
+            result: 'ERROR', 
+            tab: tabName,
+            failureReason: `Test execution error: ${error.message}`
+          });
         } finally {
           // Return to current tab list view to continue iterating
           try {
@@ -235,4 +254,24 @@ test('PlanetSportBet – American Football Live Tracker Check', async ({ page })
   const totalTested = totalPassCount + totalFailCount;
   const successRate = totalTested > 0 ? Math.round((totalPassCount / totalTested) * 100) : 0;
   console.log(`\n🎖️  Live Tracker Coverage: ${totalPassCount}/${totalTested} events (${successRate}%)`);
+  
+  // Output individual event results to a JSON file for report generation
+  const fs = require('fs');
+  const eventResults = {
+    testName: 'PlanetSportBet – American Football Live Tracker Check',
+    sport: 'NFL (PSG)',
+    totalEvents: results.length,
+    passedEvents: results.filter(r => r.result === 'PASS').length,
+    failedEvents: results.filter(r => r.result === 'FAIL').length,
+    errorEvents: results.filter(r => r.result === 'ERROR').length,
+    events: results.map(r => ({
+      event: r.event,
+      result: r.result,
+      tab: r.tab,
+      failureReason: r.failureReason
+    }))
+  };
+  
+  fs.writeFileSync('nfl-events-results.json', JSON.stringify(eventResults, null, 2));
+  console.log('📄 Individual event results saved to nfl-events-results.json');
 });

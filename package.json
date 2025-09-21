@@ -10,7 +10,15 @@
     "test:tennis": "playwright test tests/specs/planetsports/PSG.Tennis.Animations.Spec.ts --project=chromium",
     "test:cricket": "playwright test tests/specs/planetsports/PSG.cricket.Animations.spec.ts --project=chromium",
     "test:nfl": "playwright test tests/specs/planetsports/PSG.NFL.Animations.spec.ts --project=chromium",
-    "test:all": "playwright test tests/specs/planetsports/ --project=chromium",
+    "test:starsports-football": "playwright test tests/specs/starsports/Str.Football.Animations.spec.ts --project=chromium",
+    "test:starsports-tennis": "playwright test tests/specs/starsports/Str.Tennis.Animations.spec.ts --project=chromium",
+    "test:starsports-cricket": "playwright test tests/specs/starsports/Str.Cricket.Animations.spec.ts --project=chromium",
+    "test:starsports-nfl": "playwright test tests/specs/starsports/Str.NFL.Animations.spec.ts --project=chromium",
+    "test:psg-football": "playwright test tests/specs/planetsports/PSG.Football.Animations.spec.ts --project=chromium",
+    "test:psg-tennis": "playwright test tests/specs/planetsports/PSG.Tennis.Animations.Spec.ts --project=chromium",
+    "test:psg-cricket": "playwright test tests/specs/planetsports/PSG.cricket.Animations.spec.ts --project=chromium",
+    "test:psg-nfl": "playwright test tests/specs/planetsports/PSG.NFL.Animations.spec.ts --project=chromium",
+    "test:all": "playwright test tests/specs/planetsports/ tests/specs/starsports/ --project=chromium",
     "test:report": "node scripts/run-tests-with-report.js",
     "test:ci": "playwright test --project=chromium --reporter=json --output-dir=test-results-json",
     "report": "node scripts/generate-report.js",
@@ -31,5 +39,8 @@
   },
   "engines": {
     "node": ">=18.0.0"
+  },
+  "dependencies": {
+    "nodemailer": "^7.0.6"
   }
 }
