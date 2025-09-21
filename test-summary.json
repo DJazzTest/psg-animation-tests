@@ -1,0 +1,52 @@
+{
+  "stats": {
+    "total": 6,
+    "passed": 3,
+    "failed": 3,
+    "skipped": 0
+  },
+  "tests": [
+    {
+      "status": "timedOut",
+      "duration": 60060,
+      "error": "\u001b[31mTest timeout of 60000ms exceeded.\u001b[39m",
+      "sport": "Unknown",
+      "file": "specs/planetsports/planetsportfootballanimation.test.spec.ts"
+    },
+    {
+      "status": "passed",
+      "duration": 50919,
+      "error": null,
+      "sport": "Unknown",
+      "file": "specs/planetsports/planetsportgroup.tennis.spec.ts"
+    },
+    {
+      "status": "passed",
+      "duration": 19594,
+      "error": null,
+      "sport": "Unknown",
+      "file": "specs/planetsports/PSG.cricket.Animations.spec.ts"
+    },
+    {
+      "status": "timedOut",
+      "duration": 60059,
+      "error": "\u001b[31mTest timeout of 60000ms exceeded.\u001b[39m",
+      "sport": "Unknown",
+      "file": "specs/planetsports/PSG.Football.Animations.spec.ts"
+    },
+    {
+      "status": "passed",
+      "duration": 190150,
+      "error": null,
+      "sport": "Unknown",
+      "file": "specs/planetsports/PSG.NFL.Animations.spec.ts"
+    },
+    {
+      "status": "timedOut",
+      "duration": 60023,
+      "error": "\u001b[31mTest timeout of 60000ms exceeded.\u001b[39m",
+      "sport": "Unknown",
+      "file": "specs/planetsports/PSG.Tennis.Animations.Spec.ts"
+    }
+  ]
+}

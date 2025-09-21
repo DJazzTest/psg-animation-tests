@@ -1,0 +1,1838 @@
+{
+  "config": {
+    "configFile": "/Users/davidjarrett/Documents/psg-animation-tests/playwright.config.ts",
+    "rootDir": "/Users/davidjarrett/Documents/psg-animation-tests/tests",
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 5
+    },
+    "preserveOutput": "always",
+    "reporter": [
+      [
+        "json"
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "quiet": false,
+    "projects": [
+      {
+        "outputDir": "/Users/davidjarrett/Documents/psg-animation-tests/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 5
+        },
+        "id": "chromium",
+        "name": "chromium",
+        "testDir": "/Users/davidjarrett/Documents/psg-animation-tests/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/davidjarrett/Documents/psg-animation-tests/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 5
+        },
+        "id": "chromium-slow",
+        "name": "chromium-slow",
+        "testDir": "/Users/davidjarrett/Documents/psg-animation-tests/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/davidjarrett/Documents/psg-animation-tests/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 5
+        },
+        "id": "firefox",
+        "name": "firefox",
+        "testDir": "/Users/davidjarrett/Documents/psg-animation-tests/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/davidjarrett/Documents/psg-animation-tests/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 5
+        },
+        "id": "webkit",
+        "name": "webkit",
+        "testDir": "/Users/davidjarrett/Documents/psg-animation-tests/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "shard": null,
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.54.1",
+    "workers": 5,
+    "webServer": null
+  },
+  "suites": [
+    {
+      "title": "specs/planetsports/planetsportfootballanimation.test.spec.ts",
+      "file": "specs/planetsports/planetsportfootballanimation.test.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "PlanetSportBet – Football Animation Check",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "timedOut",
+                  "duration": 60060,
+                  "error": {
+                    "message": "\u001b[31mTest timeout of 60000ms exceeded.\u001b[39m",
+                    "stack": "\u001b[31mTest timeout of 60000ms exceeded.\u001b[39m"
+                  },
+                  "errors": [
+                    {
+                      "message": "\u001b[31mTest timeout of 60000ms exceeded.\u001b[39m"
+                    }
+                  ],
+                  "stdout": [
+                    {
+                      "text": "🚀 Starting Football Animation Test...\n"
+                    },
+                    {
+                      "text": "✅ Popup closed\n"
+                    },
+                    {
+                      "text": "🏈 Navigating to Football section...\n"
+                    },
+                    {
+                      "text": "📅 Clicking Today tab...\n"
+                    },
+                    {
+                      "text": "🔍 Looking for football events...\n"
+                    },
+                    {
+                      "text": "📸 Screenshot saved as football-page-debug.png\n"
+                    },
+                    {
+                      "text": "⚽ Found 12 football event links\n"
+                    },
+                    {
+                      "text": "\n🎯 Testing event 1/3: Bournemouth vs Newcastle UnitedToday 14:00\n"
+                    },
+                    {
+                      "text": "✅ Successfully clicked on: Bournemouth vs Newcastle UnitedToday 14:00\n"
+                    },
+                    {
+                      "text": "⏳ Waiting 3 seconds for page to load...\n"
+                    },
+                    {
+                      "text": "📊 Looking for Live tracker button...\n"
+                    },
+                    {
+                      "text": "✅ Live tracker clicked for Bournemouth vs Newcastle UnitedToday 14:00\n"
+                    },
+                    {
+                      "text": "🎬 Looking for animated_widget iframe for Bournemouth vs Newcastle UnitedToday 14:00...\n"
+                    },
+                    {
+                      "text": "🔗 Iframe src: https://widgets.thesports01.com/en/3d/football?profile=v1qllh2jwioujq7&uuid=4wyrn4h6e4vvq86\n"
+                    },
+                    {
+                      "text": "✅ PASS: animated_widget iframe found with correct src for — Bournemouth vs Newcastle UnitedToday 14:00\n"
+                    },
+                    {
+                      "text": "⏳ Waiting 10 seconds to observe 3D football animation...\n"
+                    },
+                    {
+                      "text": "🔄 Going back to Football page...\n"
+                    },
+                    {
+                      "text": "📅 Clicking Today tab again...\n"
+                    },
+                    {
+                      "text": "\n🎯 Testing event 2/3: Sunderland vs Aston VillaToday 14:00\n"
+                    },
+                    {
+                      "text": "✅ Successfully clicked on: Sunderland vs Aston VillaToday 14:00\n"
+                    },
+                    {
+                      "text": "⏳ Waiting 3 seconds for page to load...\n"
+                    },
+                    {
+                      "text": "📊 Looking for Live tracker button...\n"
+                    },
+                    {
+                      "text": "✅ Live tracker clicked for Sunderland vs Aston VillaToday 14:00\n"
+                    },
+                    {
+                      "text": "🎬 Looking for animated_widget iframe for Sunderland vs Aston VillaToday 14:00...\n"
+                    },
+                    {
+                      "text": "🔗 Iframe src: https://widgets.thesports01.com/en/3d/football?profile=v1qllh2jwioujq7&uuid=4jwq2ghnkx78m0v\n"
+                    },
+                    {
+                      "text": "✅ PASS: animated_widget iframe found with correct src for — Sunderland vs Aston VillaToday 14:00\n"
+                    },
+                    {
+                      "text": "⏳ Waiting 10 seconds to observe 3D football animation...\n"
+                    },
+                    {
+                      "text": "🔄 Going back to Football page...\n"
+                    },
+                    {
+                      "text": "📅 Clicking Today tab again...\n"
+                    },
+                    {
+                      "text": "\n🎯 Testing event 3/3: Arsenal vs Manchester CityToday 16:30\n"
+                    },
+                    {
+                      "text": "✅ Successfully clicked on: Arsenal vs Manchester CityToday 16:30\n"
+                    },
+                    {
+                      "text": "⏳ Waiting 3 seconds for page to load...\n"
+                    },
+                    {
+                      "text": "📊 Looking for Live tracker button...\n"
+                    },
+                    {
+                      "text": "✅ Live tracker clicked for Arsenal vs Manchester CityToday 16:30\n"
+                    },
+                    {
+                      "text": "🎬 Looking for animated_widget iframe for Arsenal vs Manchester CityToday 16:30...\n"
+                    },
+                    {
+                      "text": "🔗 Iframe src: https://widgets.thesports01.com/en/3d/football?profile=v1qllh2jwioujq7&uuid=jw2r09hknjwprz8\n"
+                    },
+                    {
+                      "text": "✅ PASS: animated_widget iframe found with correct src for — Arsenal vs Manchester CityToday 16:30\n"
+                    },
+                    {
+                      "text": "⏳ Waiting 10 seconds to observe 3D football animation...\n"
+                    },
+                    {
+                      "text": "❌ FAIL: no animated_widget iframe found for — Arsenal vs Manchester CityToday 16:30: page.waitForTimeout: Test timeout of 60000ms exceeded.\n"
+                    },
+                    {
+                      "text": "🔄 Going back to Football page...\n"
+                    },
+                    {
+                      "text": "❌ Failed to test event: Arsenal vs Manchester CityToday 16:30 - locator.click: Target page, context or browser has been closed\n"
+                    },
+                    {
+                      "text": "\n🧪 === FOOTBALL ANIMATION TEST RESULTS ===\n"
+                    },
+                    {
+                      "text": "📊 Total Football Events Tested: 3\n"
+                    },
+                    {
+                      "text": "✅ Events with Animations (PASS): 3\n"
+                    },
+                    {
+                      "text": "❌ Events without Animations (FAIL): 0\n"
+                    },
+                    {
+                      "text": "🚨 Events with Errors (ERROR): 1\n"
+                    },
+                    {
+                      "text": "📈 Animation Success Rate: 100%\n"
+                    },
+                    {
+                      "text": "\n📋 === DETAILED RESULTS ===\n"
+                    },
+                    {
+                      "text": "PASS: Bournemouth vs Newcastle UnitedToday 14:00\n"
+                    },
+                    {
+                      "text": "PASS: Sunderland vs Aston VillaToday 14:00\n"
+                    },
+                    {
+                      "text": "PASS: Arsenal vs Manchester CityToday 16:30\n"
+                    },
+                    {
+                      "text": "ERROR: Arsenal vs Manchester CityToday 16:30\n"
+                    },
+                    {
+                      "text": "\n🏁 Football Animation Test completed!\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2025-09-21T12:18:35.101Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/davidjarrett/Documents/psg-animation-tests/test-results/specs-planetsports-planets-8ddfc--–-Football-Animation-Check-chromium/error-context.md"
+                    }
+                  ]
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "9062c0b562a3523da20a-12f545cedfae755fa38a",
+          "file": "specs/planetsports/planetsportfootballanimation.test.spec.ts",
+          "line": 3,
+          "column": 5
+        }
+      ]
+    },
+    {
+      "title": "specs/planetsports/planetsportgroup.tennis.spec.ts",
+      "file": "specs/planetsports/planetsportgroup.tennis.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "PlanetSportBet – Tennis Tab Animation Check",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 50919,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "🏆 Confirming we're on All Sports tab after clicking In Play...\n"
+                    },
+                    {
+                      "text": "✅ Confirmed on All Sports tab\n"
+                    },
+                    {
+                      "text": "🔍 Looking for Tennis tab (may not be first in navigation bar)...\n"
+                    },
+                    {
+                      "text": "✅ Found Tennis tab using data-test-filter-key=\"tennis\"\n"
+                    },
+                    {
+                      "text": "🎾 Clicked on Tennis tab\n"
+                    },
+                    {
+                      "text": "🔍 Looking for tennis events...\n"
+                    },
+                    {
+                      "text": "📸 Screenshot saved as tennis-page-debug.png\n"
+                    },
+                    {
+                      "text": "🎾 Number of Tennis event links found: 5\n"
+                    },
+                    {
+                      "text": "❌ FAIL: no animated_widget for — Jasmine Paolini vs Jessica PegulaIn Play\n"
+                    },
+                    {
+                      "text": "🔄 Clicking In Play at top for event 1/5...\n"
+                    },
+                    {
+                      "text": "🏆 Confirmed back on All Sports tab\n"
+                    },
+                    {
+                      "text": "🔍 Looking for Tennis tab (may not be first in navigation bar)...\n"
+                    },
+                    {
+                      "text": "✅ Found Tennis tab using data-test-filter-key=\"tennis\"\n"
+                    },
+                    {
+                      "text": "🎾 Clicked on Tennis tab\n"
+                    },
+                    {
+                      "text": "✅ PASS: animated_widget found for — Taro Daniel vs Alexander ShevchenkoIn Play\n"
+                    },
+                    {
+                      "text": "🔄 Clicking In Play at top for event 2/5...\n"
+                    },
+                    {
+                      "text": "🏆 Confirmed back on All Sports tab\n"
+                    },
+                    {
+                      "text": "🔍 Looking for Tennis tab (may not be first in navigation bar)...\n"
+                    },
+                    {
+                      "text": "✅ Found Tennis tab using data-test-filter-key=\"tennis\"\n"
+                    },
+                    {
+                      "text": "🎾 Clicked on Tennis tab\n"
+                    },
+                    {
+                      "text": "✅ PASS: animated_widget found for — Yibing Wu vs Daniil MedvedevIn Play\n"
+                    },
+                    {
+                      "text": "🔄 Clicking In Play at top for event 3/5...\n"
+                    },
+                    {
+                      "text": "🏆 Confirmed back on All Sports tab\n"
+                    },
+                    {
+                      "text": "🔍 Looking for Tennis tab (may not be first in navigation bar)...\n"
+                    },
+                    {
+                      "text": "✅ Found Tennis tab using data-test-filter-key=\"tennis\"\n"
+                    },
+                    {
+                      "text": "🎾 Clicked on Tennis tab\n"
+                    },
+                    {
+                      "text": "✅ PASS: animated_widget found for — Polina Iatchenko vs Gabriela Andrea KnutsonIn Play\n"
+                    },
+                    {
+                      "text": "🔄 Clicking In Play at top for event 4/5...\n"
+                    },
+                    {
+                      "text": "🏆 Confirmed back on All Sports tab\n"
+                    },
+                    {
+                      "text": "🔍 Looking for Tennis tab (may not be first in navigation bar)...\n"
+                    },
+                    {
+                      "text": "✅ Found Tennis tab using data-test-filter-key=\"tennis\"\n"
+                    },
+                    {
+                      "text": "🎾 Clicked on Tennis tab\n"
+                    },
+                    {
+                      "text": "✅ PASS: animated_widget found for — Dan Added vs Moez EcharguiIn Play\n"
+                    },
+                    {
+                      "text": "🔄 Clicking In Play at top for event 5/5...\n"
+                    },
+                    {
+                      "text": "🏆 Confirmed back on All Sports tab\n"
+                    },
+                    {
+                      "text": "🔍 Looking for Tennis tab (may not be first in navigation bar)...\n"
+                    },
+                    {
+                      "text": "✅ Found Tennis tab using data-test-filter-key=\"tennis\"\n"
+                    },
+                    {
+                      "text": "🎾 Clicked on Tennis tab\n"
+                    },
+                    {
+                      "text": "\n🧪 === TENNIS ANIMATION TEST RESULTS ===\n"
+                    },
+                    {
+                      "text": "📊 Total Tennis Events Tested: 5\n"
+                    },
+                    {
+                      "text": "✅ Events with Animations (PASS): 4\n"
+                    },
+                    {
+                      "text": "❌ Events without Animations (FAIL): 1\n"
+                    },
+                    {
+                      "text": "📈 Animation Success Rate: 80%\n"
+                    },
+                    {
+                      "text": "\n📋 === DETAILED RESULTS ===\n"
+                    },
+                    {
+                      "text": "FAIL: Jasmine Paolini vs Jessica PegulaIn Play\n"
+                    },
+                    {
+                      "text": "PASS: Taro Daniel vs Alexander ShevchenkoIn Play\n"
+                    },
+                    {
+                      "text": "PASS: Yibing Wu vs Daniil MedvedevIn Play\n"
+                    },
+                    {
+                      "text": "PASS: Polina Iatchenko vs Gabriela Andrea KnutsonIn Play\n"
+                    },
+                    {
+                      "text": "PASS: Dan Added vs Moez EcharguiIn Play\n"
+                    },
+                    {
+                      "text": "\n❌ === EVENTS WITH NO ANIMATIONS (FAILED) ===\n"
+                    },
+                    {
+                      "text": "1. Jasmine Paolini vs Jessica PegulaIn Play\n"
+                    },
+                    {
+                      "text": "   📝 Description: No animated_widget elements detected - event lacks 3D animation widgets\n"
+                    },
+                    {
+                      "text": "\n📝 Summary: 1 tennis events failed animation detection\n"
+                    },
+                    {
+                      "text": "📝 Reason: These events do not contain .animated_widget elements (3D widgets in iframes)\n"
+                    },
+                    {
+                      "text": "📝 Impact: Users viewing these events will not see animated visualizations\n"
+                    },
+                    {
+                      "text": "\n✅ === EVENTS WITH ANIMATIONS (PASSED) ===\n"
+                    },
+                    {
+                      "text": "1. Taro Daniel vs Alexander ShevchenkoIn Play\n"
+                    },
+                    {
+                      "text": "2. Yibing Wu vs Daniil MedvedevIn Play\n"
+                    },
+                    {
+                      "text": "3. Polina Iatchenko vs Gabriela Andrea KnutsonIn Play\n"
+                    },
+                    {
+                      "text": "4. Dan Added vs Moez EcharguiIn Play\n"
+                    },
+                    {
+                      "text": "\n🎯 Summary: 4 tennis events successfully detected animations\n"
+                    },
+                    {
+                      "text": "\n🏆 === FINAL ASSESSMENT ===\n"
+                    },
+                    {
+                      "text": "🌟 EXCELLENT: Tennis section has strong animation coverage\n"
+                    },
+                    {
+                      "text": "🎖️  Tennis Animation Coverage: 4/5 events (80%)\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2025-09-21T12:18:35.092Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "578b1dc94d7a7bc61341-68e245b3b5690bd43793",
+          "file": "specs/planetsports/planetsportgroup.tennis.spec.ts",
+          "line": 3,
+          "column": 5
+        }
+      ]
+    },
+    {
+      "title": "specs/planetsports/PSG.cricket.Animations.spec.ts",
+      "file": "specs/planetsports/PSG.cricket.Animations.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "PlanetSportBet – Cricket Tab Animation Check",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 2,
+                  "status": "passed",
+                  "duration": 19594,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "🏆 Confirming we're on All Sports tab after clicking In Play...\n"
+                    },
+                    {
+                      "text": "✅ Confirmed on All Sports tab\n"
+                    },
+                    {
+                      "text": "🔍 Looking for Cricket tab (may not be first in navigation bar)...\n"
+                    },
+                    {
+                      "text": "✅ Found Cricket tab using data-test-filter-key=\"cricket\"\n"
+                    },
+                    {
+                      "text": "🏏 Clicked on Cricket tab\n"
+                    },
+                    {
+                      "text": "🔍 Looking for cricket events...\n"
+                    },
+                    {
+                      "text": "📸 Screenshot saved as cricket-page-debug.png\n"
+                    },
+                    {
+                      "text": "🏏 Number of Cricket event links found: 1\n"
+                    },
+                    {
+                      "text": "📊 Checking Live tracker status for Hampshire Women vs Lancashire WomenIn Play...\n"
+                    },
+                    {
+                      "text": "ℹ️ Live tracker not open, attempting to click...\n"
+                    },
+                    {
+                      "text": "✅ Live tracker clicked for Hampshire Women vs Lancashire WomenIn Play\n"
+                    },
+                    {
+                      "text": "✅ Live tracker window expanded for — Hampshire Women vs Lancashire WomenIn Play\n"
+                    },
+                    {
+                      "text": "✅ Found iframe inside .animated_widget for — Hampshire Women vs Lancashire WomenIn Play\n"
+                    },
+                    {
+                      "text": "⏳ Waiting for iframe src to load...\n"
+                    },
+                    {
+                      "text": "   Attempt 1/8: src = https://widgets.thesports01.com/en/cricket?profile=8nq2kc475czulqy&uuid=zp5rzpc35e6lq82\n"
+                    },
+                    {
+                      "text": "✅ PASS: Live tracker expanded and animation loaded for — Hampshire Women vs Lancashire WomenIn Play\n"
+                    },
+                    {
+                      "text": "🔗 Iframe src: https://widgets.thesports01.com/en/cricket?profile=8nq2kc475czulqy&uuid=zp5rzpc35e6lq82\n"
+                    },
+                    {
+                      "text": "🔄 Clicking In Play at top for event 1/1...\n"
+                    },
+                    {
+                      "text": "🏆 Confirmed back on All Sports tab\n"
+                    },
+                    {
+                      "text": "🔍 Looking for Cricket tab (may not be first in navigation bar)...\n"
+                    },
+                    {
+                      "text": "✅ Found Cricket tab using data-test-filter-key=\"cricket\"\n"
+                    },
+                    {
+                      "text": "🏏 Clicked on Cricket tab\n"
+                    },
+                    {
+                      "text": "\n🧪 === CRICKET ANIMATION TEST RESULTS ===\n"
+                    },
+                    {
+                      "text": "📊 Total Cricket Events Tested: 1\n"
+                    },
+                    {
+                      "text": "✅ Events with Animations (PASS): 1\n"
+                    },
+                    {
+                      "text": "❌ Events without Animations (FAIL): 0\n"
+                    },
+                    {
+                      "text": "📈 Animation Success Rate: 100%\n"
+                    },
+                    {
+                      "text": "\n📋 === DETAILED RESULTS ===\n"
+                    },
+                    {
+                      "text": "PASS: Hampshire Women vs Lancashire WomenIn Play\n"
+                    },
+                    {
+                      "text": "\n🎉 All cricket events passed animation detection!\n"
+                    },
+                    {
+                      "text": "\n✅ === EVENTS WITH ANIMATIONS (PASSED) ===\n"
+                    },
+                    {
+                      "text": "1. Hampshire Women vs Lancashire WomenIn Play\n"
+                    },
+                    {
+                      "text": "\n🎯 Summary: 1 cricket events successfully detected animations\n"
+                    },
+                    {
+                      "text": "\n🏆 === FINAL ASSESSMENT ===\n"
+                    },
+                    {
+                      "text": "🌟 EXCELLENT: Cricket section has strong animation coverage\n"
+                    },
+                    {
+                      "text": "🎖️  Cricket Animation Coverage: 1/1 events (100%)\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2025-09-21T12:18:35.115Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "160f82ab06ab92971b4b-2eeddeb6183326b879d0",
+          "file": "specs/planetsports/PSG.cricket.Animations.spec.ts",
+          "line": 3,
+          "column": 5
+        }
+      ]
+    },
+    {
+      "title": "specs/planetsports/PSG.Football.Animations.spec.ts",
+      "file": "specs/planetsports/PSG.Football.Animations.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "PlanetSportBet – Football Animation Check",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 3,
+                  "parallelIndex": 3,
+                  "status": "timedOut",
+                  "duration": 60059,
+                  "error": {
+                    "message": "\u001b[31mTest timeout of 60000ms exceeded.\u001b[39m",
+                    "stack": "\u001b[31mTest timeout of 60000ms exceeded.\u001b[39m"
+                  },
+                  "errors": [
+                    {
+                      "message": "\u001b[31mTest timeout of 60000ms exceeded.\u001b[39m"
+                    }
+                  ],
+                  "stdout": [
+                    {
+                      "text": "🚀 Starting Football Animation Test...\n"
+                    },
+                    {
+                      "text": "✅ Popup closed\n"
+                    },
+                    {
+                      "text": "🏈 Navigating to Football section...\n"
+                    },
+                    {
+                      "text": "\n🔍 Testing Today tab...\n"
+                    },
+                    {
+                      "text": "📊 Today football events found: 12\n"
+                    },
+                    {
+                      "text": "\n🎯 Testing event 1/40: Bournemouth vs Newcastle UnitedToday 14:00 (Today)\n"
+                    },
+                    {
+                      "text": "🏆 League: Other Competition\n"
+                    },
+                    {
+                      "text": "✅ Successfully clicked on: Bournemouth vs Newcastle UnitedToday 14:00\n"
+                    },
+                    {
+                      "text": "⏳ Waiting 3 seconds for page to load...\n"
+                    },
+                    {
+                      "text": "📊 Checking Live tracker status for Bournemouth vs Newcastle UnitedToday 14:00...\n"
+                    },
+                    {
+                      "text": "✅ Live tracker already open for Bournemouth vs Newcastle UnitedToday 14:00\n"
+                    },
+                    {
+                      "text": "🎬 Looking for animated_widget iframe for Bournemouth vs Newcastle UnitedToday 14:00...\n"
+                    },
+                    {
+                      "text": "✅ Found .animated_widget div\n"
+                    },
+                    {
+                      "text": "✅ Found iframe inside .animated_widget\n"
+                    },
+                    {
+                      "text": "🔗 Iframe src: https://widgets.thesports01.com/en/3d/football?profile=v1qllh2jwioujq7&uuid=4wyrn4h6e4vvq86\n"
+                    },
+                    {
+                      "text": "✅ PASS: animated_widget iframe found with correct src and is visible for — Bournemouth vs Newcastle UnitedToday 14:00\n"
+                    },
+                    {
+                      "text": "✅ PASS: iframe content frame is accessible\n"
+                    },
+                    {
+                      "text": "⏳ Waiting 5 seconds to observe 3D football animation...\n"
+                    },
+                    {
+                      "text": "🔄 Going back to Football page...\n"
+                    },
+                    {
+                      "text": "📅 Clicking Today tab again...\n"
+                    },
+                    {
+                      "text": "\n🎯 Testing event 2/40: Sunderland vs Aston VillaToday 14:00 (Today)\n"
+                    },
+                    {
+                      "text": "🏆 League: Other Competition\n"
+                    },
+                    {
+                      "text": "✅ Successfully clicked on: Sunderland vs Aston VillaToday 14:00\n"
+                    },
+                    {
+                      "text": "⏳ Waiting 3 seconds for page to load...\n"
+                    },
+                    {
+                      "text": "📊 Checking Live tracker status for Sunderland vs Aston VillaToday 14:00...\n"
+                    },
+                    {
+                      "text": "✅ Live tracker already open for Sunderland vs Aston VillaToday 14:00\n"
+                    },
+                    {
+                      "text": "🎬 Looking for animated_widget iframe for Sunderland vs Aston VillaToday 14:00...\n"
+                    },
+                    {
+                      "text": "✅ Found .animated_widget div\n"
+                    },
+                    {
+                      "text": "✅ Found iframe inside .animated_widget\n"
+                    },
+                    {
+                      "text": "🔗 Iframe src: https://widgets.thesports01.com/en/3d/football?profile=v1qllh2jwioujq7&uuid=4jwq2ghnkx78m0v\n"
+                    },
+                    {
+                      "text": "✅ PASS: animated_widget iframe found with correct src and is visible for — Sunderland vs Aston VillaToday 14:00\n"
+                    },
+                    {
+                      "text": "✅ PASS: iframe content frame is accessible\n"
+                    },
+                    {
+                      "text": "⏳ Waiting 5 seconds to observe 3D football animation...\n"
+                    },
+                    {
+                      "text": "🔄 Going back to Football page...\n"
+                    },
+                    {
+                      "text": "📅 Clicking Today tab again...\n"
+                    },
+                    {
+                      "text": "\n🎯 Testing event 3/40: Arsenal vs Manchester CityToday 16:30 (Today)\n"
+                    },
+                    {
+                      "text": "🏆 League: Other Competition\n"
+                    },
+                    {
+                      "text": "✅ Successfully clicked on: Arsenal vs Manchester CityToday 16:30\n"
+                    },
+                    {
+                      "text": "⏳ Waiting 3 seconds for page to load...\n"
+                    },
+                    {
+                      "text": "📊 Checking Live tracker status for Arsenal vs Manchester CityToday 16:30...\n"
+                    },
+                    {
+                      "text": "✅ Live tracker already open for Arsenal vs Manchester CityToday 16:30\n"
+                    },
+                    {
+                      "text": "🎬 Looking for animated_widget iframe for Arsenal vs Manchester CityToday 16:30...\n"
+                    },
+                    {
+                      "text": "✅ Found .animated_widget div\n"
+                    },
+                    {
+                      "text": "✅ Found iframe inside .animated_widget\n"
+                    },
+                    {
+                      "text": "🔗 Iframe src: https://widgets.thesports01.com/en/3d/football?profile=v1qllh2jwioujq7&uuid=jw2r09hknjwprz8\n"
+                    },
+                    {
+                      "text": "✅ PASS: animated_widget iframe found with correct src and is visible for — Arsenal vs Manchester CityToday 16:30\n"
+                    },
+                    {
+                      "text": "✅ PASS: iframe content frame is accessible\n"
+                    },
+                    {
+                      "text": "⏳ Waiting 5 seconds to observe 3D football animation...\n"
+                    },
+                    {
+                      "text": "🔄 Going back to Football page...\n"
+                    },
+                    {
+                      "text": "📅 Clicking Today tab again...\n"
+                    },
+                    {
+                      "text": "\n🎯 Testing event 4/40: Bristol City vs Oxford UnitedToday 15:00 (Today)\n"
+                    },
+                    {
+                      "text": "🏆 League: Other Competition\n"
+                    },
+                    {
+                      "text": "✅ Successfully clicked on: Bristol City vs Oxford UnitedToday 15:00\n"
+                    },
+                    {
+                      "text": "⏳ Waiting 3 seconds for page to load...\n"
+                    },
+                    {
+                      "text": "📊 Checking Live tracker status for Bristol City vs Oxford UnitedToday 15:00...\n"
+                    },
+                    {
+                      "text": "✅ Live tracker already open for Bristol City vs Oxford UnitedToday 15:00\n"
+                    },
+                    {
+                      "text": "🎬 Looking for animated_widget iframe for Bristol City vs Oxford UnitedToday 15:00...\n"
+                    },
+                    {
+                      "text": "✅ Found .animated_widget div\n"
+                    },
+                    {
+                      "text": "✅ Found iframe inside .animated_widget\n"
+                    },
+                    {
+                      "text": "🔗 Iframe src: https://widgets.thesports01.com/en/3d/football?profile=v1qllh2jwioujq7&uuid=y0or5jh84dkkqwz\n"
+                    },
+                    {
+                      "text": "✅ PASS: animated_widget iframe found with correct src and is visible for — Bristol City vs Oxford UnitedToday 15:00\n"
+                    },
+                    {
+                      "text": "✅ PASS: iframe content frame is accessible\n"
+                    },
+                    {
+                      "text": "⏳ Waiting 5 seconds to observe 3D football animation...\n"
+                    },
+                    {
+                      "text": "❌ FAIL: no animated_widget iframe found for — Bristol City vs Oxford UnitedToday 15:00\n"
+                    },
+                    {
+                      "text": "   🔴 Description: Live tracker open but animated widget window not accessible\n"
+                    },
+                    {
+                      "text": "   📝 Reason: This typically indicates a suspended/inactive match or technical issue\n"
+                    },
+                    {
+                      "text": "   ⚽ Match: Bristol City vs Oxford UnitedToday 15:00\n"
+                    },
+                    {
+                      "text": "   🏆 Competition: Other Competition\n"
+                    },
+                    {
+                      "text": "   📅 Time Period: Today\n"
+                    },
+                    {
+                      "text": "   🔧 Technical: page.waitForTimeout: Test timeout of 60000ms exceeded.\n"
+                    },
+                    {
+                      "text": "🔄 Going back to Football page...\n"
+                    },
+                    {
+                      "text": "❌ Failed to test event: Bristol City vs Oxford UnitedToday 15:00 - locator.click: Target page, context or browser has been closed\n"
+                    },
+                    {
+                      "text": "\n🎯 Testing event 6/40: Football Event 5 (Today)\n"
+                    },
+                    {
+                      "text": "🏆 League: Unknown League\n"
+                    },
+                    {
+                      "text": "❌ Error testing Today tab: locator.scrollIntoViewIfNeeded: Target page, context or browser has been closed\n"
+                    },
+                    {
+                      "text": "\n🔍 Testing Tomorrow tab...\n"
+                    },
+                    {
+                      "text": "❌ Error testing Tomorrow tab: locator.click: Target page, context or browser has been closed\n"
+                    },
+                    {
+                      "text": "\n🔍 Testing Weekend tab...\n"
+                    },
+                    {
+                      "text": "❌ Error testing Weekend tab: locator.click: Target page, context or browser has been closed\n"
+                    },
+                    {
+                      "text": "\n🔍 Testing Current Week tab...\n"
+                    },
+                    {
+                      "text": "❌ Error testing Current Week tab: locator.click: Target page, context or browser has been closed\n"
+                    },
+                    {
+                      "text": "\n🧪 === FOOTBALL ANIMATION TEST RESULTS ===\n"
+                    },
+                    {
+                      "text": "📊 Total Football Events Tested: 5\n"
+                    },
+                    {
+                      "text": "✅ Events with Animations (PASS): 4\n"
+                    },
+                    {
+                      "text": "❌ Events without Animations (FAIL): 0\n"
+                    },
+                    {
+                      "text": "🚨 Events with Errors (ERROR): 1\n"
+                    },
+                    {
+                      "text": "📈 Animation Success Rate: 80%\n"
+                    },
+                    {
+                      "text": "\n📅 === RESULTS BY TIME PERIOD ===\n"
+                    },
+                    {
+                      "text": "Today: 4/5 (80%)\n"
+                    },
+                    {
+                      "text": "Tomorrow: 0/0 (0%)\n"
+                    },
+                    {
+                      "text": "Weekend: 0/0 (0%)\n"
+                    },
+                    {
+                      "text": "Current Week: 0/0 (0%)\n"
+                    },
+                    {
+                      "text": "\n🏆 === RESULTS BY LEAGUE ===\n"
+                    },
+                    {
+                      "text": "Other Competition: 4/5 (80%)\n"
+                    },
+                    {
+                      "text": "\n📋 === DETAILED RESULTS ===\n"
+                    },
+                    {
+                      "text": "PASS: Bournemouth vs Newcastle UnitedToday 14:00 (Today, Other Competition)\n"
+                    },
+                    {
+                      "text": "PASS: Sunderland vs Aston VillaToday 14:00 (Today, Other Competition)\n"
+                    },
+                    {
+                      "text": "PASS: Arsenal vs Manchester CityToday 16:30 (Today, Other Competition)\n"
+                    },
+                    {
+                      "text": "PASS: Bristol City vs Oxford UnitedToday 15:00 (Today, Other Competition)\n"
+                    },
+                    {
+                      "text": "ERROR: Bristol City vs Oxford UnitedToday 15:00 (Today, Other Competition)\n"
+                    },
+                    {
+                      "text": "\n🏁 Football Animation Test completed!\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2025-09-21T12:18:35.109Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/davidjarrett/Documents/psg-animation-tests/test-results/specs-planetsports-PSG.Foo-f6ce4--–-Football-Animation-Check-chromium/error-context.md"
+                    }
+                  ]
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "bd35cd911499bd488945-ac5d635b68d59035665b",
+          "file": "specs/planetsports/PSG.Football.Animations.spec.ts",
+          "line": 3,
+          "column": 5
+        }
+      ]
+    },
+    {
+      "title": "specs/planetsports/PSG.NFL.Animations.spec.ts",
+      "file": "specs/planetsports/PSG.NFL.Animations.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "PlanetSportBet – American Football Live Tracker Check",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 480000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 4,
+                  "parallelIndex": 4,
+                  "status": "passed",
+                  "duration": 190150,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "🚀 Starting American Football Live Tracker check...\n"
+                    },
+                    {
+                      "text": "🏈 Navigating to American Football sport page...\n"
+                    },
+                    {
+                      "text": "\n🔍 Testing In Play tab...\n"
+                    },
+                    {
+                      "text": "ℹ️  No events message shown in In Play tab, navigating back...\n"
+                    },
+                    {
+                      "text": "\n🔍 Testing Today tab...\n"
+                    },
+                    {
+                      "text": "📊 Today US NFL events found: 13\n"
+                    },
+                    {
+                      "text": "\n🔍 Testing: Carolina Panthers (Today)\n"
+                    },
+                    {
+                      "text": "✅ PASS: Live tracker animation found — Carolina Panthers\n"
+                    },
+                    {
+                      "text": "\n🔍 Testing: Cleveland Browns (Today)\n"
+                    },
+                    {
+                      "text": "✅ PASS: Live tracker animation found — Cleveland Browns\n"
+                    },
+                    {
+                      "text": "\n🔍 Testing: Jacksonville Jaguars (Today)\n"
+                    },
+                    {
+                      "text": "✅ PASS: Live tracker animation found — Jacksonville Jaguars\n"
+                    },
+                    {
+                      "text": "\n🔍 Testing: Minnesota Vikings (Today)\n"
+                    },
+                    {
+                      "text": "✅ PASS: Live tracker animation found — Minnesota Vikings\n"
+                    },
+                    {
+                      "text": "\n🔍 Testing: New England Patriots (Today)\n"
+                    },
+                    {
+                      "text": "✅ PASS: Live tracker animation found — New England Patriots\n"
+                    },
+                    {
+                      "text": "\n🔍 Testing: Philadelphia Eagles (Today)\n"
+                    },
+                    {
+                      "text": "✅ PASS: Live tracker animation found — Philadelphia Eagles\n"
+                    },
+                    {
+                      "text": "\n🔍 Testing: Tampa Bay Buccaneers (Today)\n"
+                    },
+                    {
+                      "text": "✅ PASS: Live tracker animation found — Tampa Bay Buccaneers\n"
+                    },
+                    {
+                      "text": "\n🔍 Testing: Tennessee Titans (Today)\n"
+                    },
+                    {
+                      "text": "✅ PASS: Live tracker animation found — Tennessee Titans\n"
+                    },
+                    {
+                      "text": "\n🔍 Testing: Washington Commanders (Today)\n"
+                    },
+                    {
+                      "text": "✅ PASS: Live tracker animation found — Washington Commanders\n"
+                    },
+                    {
+                      "text": "\n🔍 Testing: Los Angeles Chargers (Today)\n"
+                    },
+                    {
+                      "text": "✅ PASS: Live tracker animation found — Los Angeles Chargers\n"
+                    },
+                    {
+                      "text": "\n🔍 Testing: Seattle Seahawks (Today)\n"
+                    },
+                    {
+                      "text": "✅ PASS: Live tracker animation found — Seattle Seahawks\n"
+                    },
+                    {
+                      "text": "\n🔍 Testing: Chicago Bears (Today)\n"
+                    },
+                    {
+                      "text": "✅ PASS: Live tracker animation found — Chicago Bears\n"
+                    },
+                    {
+                      "text": "\n🔍 Testing: San Francisco 49ers (Today)\n"
+                    },
+                    {
+                      "text": "✅ PASS: Live tracker animation found — San Francisco 49ers\n"
+                    },
+                    {
+                      "text": "📊 Today results: 13 PASS, 0 FAIL\n"
+                    },
+                    {
+                      "text": "🔄 Navigating back to planetsportbet.com then American Football for next tab...\n"
+                    },
+                    {
+                      "text": "\n🔍 Testing Tomorrow tab...\n"
+                    },
+                    {
+                      "text": "📊 Tomorrow US NFL events found: 1\n"
+                    },
+                    {
+                      "text": "\n🔍 Testing: New York Giants (Tomorrow)\n"
+                    },
+                    {
+                      "text": "✅ PASS: Live tracker animation found — New York Giants\n"
+                    },
+                    {
+                      "text": "📊 Tomorrow results: 1 PASS, 0 FAIL\n"
+                    },
+                    {
+                      "text": "🔄 Navigating back to planetsportbet.com then American Football for next tab...\n"
+                    },
+                    {
+                      "text": "\n🔍 Testing Weekend tab...\n"
+                    },
+                    {
+                      "text": "📊 Weekend US NFL events found: 13\n"
+                    },
+                    {
+                      "text": "\n🔍 Testing: Carolina Panthers (Weekend)\n"
+                    },
+                    {
+                      "text": "✅ PASS: Live tracker animation found — Carolina Panthers\n"
+                    },
+                    {
+                      "text": "\n🔍 Testing: Cleveland Browns (Weekend)\n"
+                    },
+                    {
+                      "text": "✅ PASS: Live tracker animation found — Cleveland Browns\n"
+                    },
+                    {
+                      "text": "\n🔍 Testing: Jacksonville Jaguars (Weekend)\n"
+                    },
+                    {
+                      "text": "✅ PASS: Live tracker animation found — Jacksonville Jaguars\n"
+                    },
+                    {
+                      "text": "\n🔍 Testing: Minnesota Vikings (Weekend)\n"
+                    },
+                    {
+                      "text": "✅ PASS: Live tracker animation found — Minnesota Vikings\n"
+                    },
+                    {
+                      "text": "\n🔍 Testing: New England Patriots (Weekend)\n"
+                    },
+                    {
+                      "text": "✅ PASS: Live tracker animation found — New England Patriots\n"
+                    },
+                    {
+                      "text": "\n🔍 Testing: Philadelphia Eagles (Weekend)\n"
+                    },
+                    {
+                      "text": "✅ PASS: Live tracker animation found — Philadelphia Eagles\n"
+                    },
+                    {
+                      "text": "\n🔍 Testing: Tampa Bay Buccaneers (Weekend)\n"
+                    },
+                    {
+                      "text": "✅ PASS: Live tracker animation found — Tampa Bay Buccaneers\n"
+                    },
+                    {
+                      "text": "\n🔍 Testing: Tennessee Titans (Weekend)\n"
+                    },
+                    {
+                      "text": "✅ PASS: Live tracker animation found — Tennessee Titans\n"
+                    },
+                    {
+                      "text": "\n🔍 Testing: Washington Commanders (Weekend)\n"
+                    },
+                    {
+                      "text": "✅ PASS: Live tracker animation found — Washington Commanders\n"
+                    },
+                    {
+                      "text": "\n🔍 Testing: Los Angeles Chargers (Weekend)\n"
+                    },
+                    {
+                      "text": "✅ PASS: Live tracker animation found — Los Angeles Chargers\n"
+                    },
+                    {
+                      "text": "\n🔍 Testing: Seattle Seahawks (Weekend)\n"
+                    },
+                    {
+                      "text": "✅ PASS: Live tracker animation found — Seattle Seahawks\n"
+                    },
+                    {
+                      "text": "\n🔍 Testing: Chicago Bears (Weekend)\n"
+                    },
+                    {
+                      "text": "✅ PASS: Live tracker animation found — Chicago Bears\n"
+                    },
+                    {
+                      "text": "\n🔍 Testing: San Francisco 49ers (Weekend)\n"
+                    },
+                    {
+                      "text": "✅ PASS: Live tracker animation found — San Francisco 49ers\n"
+                    },
+                    {
+                      "text": "📊 Weekend results: 13 PASS, 0 FAIL\n"
+                    },
+                    {
+                      "text": "🔄 Navigating back to planetsportbet.com then American Football for next tab...\n"
+                    },
+                    {
+                      "text": "\n🔍 Testing Current Week tab...\n"
+                    },
+                    {
+                      "text": "📊 Current Week US NFL events found: 13\n"
+                    },
+                    {
+                      "text": "\n🔍 Testing: Carolina Panthers (Current Week)\n"
+                    },
+                    {
+                      "text": "✅ PASS: Live tracker animation found — Carolina Panthers\n"
+                    },
+                    {
+                      "text": "\n🔍 Testing: Cleveland Browns (Current Week)\n"
+                    },
+                    {
+                      "text": "✅ PASS: Live tracker animation found — Cleveland Browns\n"
+                    },
+                    {
+                      "text": "\n🔍 Testing: Jacksonville Jaguars (Current Week)\n"
+                    },
+                    {
+                      "text": "✅ PASS: Live tracker animation found — Jacksonville Jaguars\n"
+                    },
+                    {
+                      "text": "\n🔍 Testing: Minnesota Vikings (Current Week)\n"
+                    },
+                    {
+                      "text": "✅ PASS: Live tracker animation found — Minnesota Vikings\n"
+                    },
+                    {
+                      "text": "\n🔍 Testing: New England Patriots (Current Week)\n"
+                    },
+                    {
+                      "text": "✅ PASS: Live tracker animation found — New England Patriots\n"
+                    },
+                    {
+                      "text": "\n🔍 Testing: Philadelphia Eagles (Current Week)\n"
+                    },
+                    {
+                      "text": "✅ PASS: Live tracker animation found — Philadelphia Eagles\n"
+                    },
+                    {
+                      "text": "\n🔍 Testing: Tampa Bay Buccaneers (Current Week)\n"
+                    },
+                    {
+                      "text": "✅ PASS: Live tracker animation found — Tampa Bay Buccaneers\n"
+                    },
+                    {
+                      "text": "\n🔍 Testing: Tennessee Titans (Current Week)\n"
+                    },
+                    {
+                      "text": "✅ PASS: Live tracker animation found — Tennessee Titans\n"
+                    },
+                    {
+                      "text": "\n🔍 Testing: Washington Commanders (Current Week)\n"
+                    },
+                    {
+                      "text": "✅ PASS: Live tracker animation found — Washington Commanders\n"
+                    },
+                    {
+                      "text": "\n🔍 Testing: Los Angeles Chargers (Current Week)\n"
+                    },
+                    {
+                      "text": "✅ PASS: Live tracker animation found — Los Angeles Chargers\n"
+                    },
+                    {
+                      "text": "\n🔍 Testing: Seattle Seahawks (Current Week)\n"
+                    },
+                    {
+                      "text": "✅ PASS: Live tracker animation found — Seattle Seahawks\n"
+                    },
+                    {
+                      "text": "\n🔍 Testing: Chicago Bears (Current Week)\n"
+                    },
+                    {
+                      "text": "✅ PASS: Live tracker animation found — Chicago Bears\n"
+                    },
+                    {
+                      "text": "\n🔍 Testing: San Francisco 49ers (Current Week)\n"
+                    },
+                    {
+                      "text": "✅ PASS: Live tracker animation found — San Francisco 49ers\n"
+                    },
+                    {
+                      "text": "📊 Current Week results: 13 PASS, 0 FAIL\n"
+                    },
+                    {
+                      "text": "🔄 Navigating back to planetsportbet.com then American Football for next tab...\n"
+                    },
+                    {
+                      "text": "\n=== AMERICAN FOOTBALL LIVE TRACKER RESULTS ===\n"
+                    },
+                    {
+                      "text": "📊 Total Events Tested: 40\n"
+                    },
+                    {
+                      "text": "✅ PASS: 40 events with live tracker animation\n"
+                    },
+                    {
+                      "text": "❌ FAIL: 0 events without live tracker animation\n"
+                    },
+                    {
+                      "text": "\n✅ PASSED EVENTS (WITH LIVE TRACKER):\n"
+                    },
+                    {
+                      "text": "1. \"Carolina Panthers (Today)\"\n"
+                    },
+                    {
+                      "text": "2. \"Cleveland Browns (Today)\"\n"
+                    },
+                    {
+                      "text": "3. \"Jacksonville Jaguars (Today)\"\n"
+                    },
+                    {
+                      "text": "4. \"Minnesota Vikings (Today)\"\n"
+                    },
+                    {
+                      "text": "5. \"New England Patriots (Today)\"\n"
+                    },
+                    {
+                      "text": "6. \"Philadelphia Eagles (Today)\"\n"
+                    },
+                    {
+                      "text": "7. \"Tampa Bay Buccaneers (Today)\"\n"
+                    },
+                    {
+                      "text": "8. \"Tennessee Titans (Today)\"\n"
+                    },
+                    {
+                      "text": "9. \"Washington Commanders (Today)\"\n"
+                    },
+                    {
+                      "text": "10. \"Los Angeles Chargers (Today)\"\n"
+                    },
+                    {
+                      "text": "11. \"Seattle Seahawks (Today)\"\n"
+                    },
+                    {
+                      "text": "12. \"Chicago Bears (Today)\"\n"
+                    },
+                    {
+                      "text": "13. \"San Francisco 49ers (Today)\"\n"
+                    },
+                    {
+                      "text": "14. \"New York Giants (Tomorrow)\"\n"
+                    },
+                    {
+                      "text": "15. \"Carolina Panthers (Weekend)\"\n"
+                    },
+                    {
+                      "text": "16. \"Cleveland Browns (Weekend)\"\n"
+                    },
+                    {
+                      "text": "17. \"Jacksonville Jaguars (Weekend)\"\n"
+                    },
+                    {
+                      "text": "18. \"Minnesota Vikings (Weekend)\"\n"
+                    },
+                    {
+                      "text": "19. \"New England Patriots (Weekend)\"\n"
+                    },
+                    {
+                      "text": "20. \"Philadelphia Eagles (Weekend)\"\n"
+                    },
+                    {
+                      "text": "21. \"Tampa Bay Buccaneers (Weekend)\"\n"
+                    },
+                    {
+                      "text": "22. \"Tennessee Titans (Weekend)\"\n"
+                    },
+                    {
+                      "text": "23. \"Washington Commanders (Weekend)\"\n"
+                    },
+                    {
+                      "text": "24. \"Los Angeles Chargers (Weekend)\"\n"
+                    },
+                    {
+                      "text": "25. \"Seattle Seahawks (Weekend)\"\n"
+                    },
+                    {
+                      "text": "26. \"Chicago Bears (Weekend)\"\n"
+                    },
+                    {
+                      "text": "27. \"San Francisco 49ers (Weekend)\"\n"
+                    },
+                    {
+                      "text": "28. \"Carolina Panthers (Current Week)\"\n"
+                    },
+                    {
+                      "text": "29. \"Cleveland Browns (Current Week)\"\n"
+                    },
+                    {
+                      "text": "30. \"Jacksonville Jaguars (Current Week)\"\n"
+                    },
+                    {
+                      "text": "31. \"Minnesota Vikings (Current Week)\"\n"
+                    },
+                    {
+                      "text": "32. \"New England Patriots (Current Week)\"\n"
+                    },
+                    {
+                      "text": "33. \"Philadelphia Eagles (Current Week)\"\n"
+                    },
+                    {
+                      "text": "34. \"Tampa Bay Buccaneers (Current Week)\"\n"
+                    },
+                    {
+                      "text": "35. \"Tennessee Titans (Current Week)\"\n"
+                    },
+                    {
+                      "text": "36. \"Washington Commanders (Current Week)\"\n"
+                    },
+                    {
+                      "text": "37. \"Los Angeles Chargers (Current Week)\"\n"
+                    },
+                    {
+                      "text": "38. \"Seattle Seahawks (Current Week)\"\n"
+                    },
+                    {
+                      "text": "39. \"Chicago Bears (Current Week)\"\n"
+                    },
+                    {
+                      "text": "40. \"San Francisco 49ers (Current Week)\"\n"
+                    },
+                    {
+                      "text": "\n🎖️  Live Tracker Coverage: 40/40 events (100%)\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2025-09-21T12:18:35.124Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "d48976fbf4b009923aae-4f33a8e8562d7f12b114",
+          "file": "specs/planetsports/PSG.NFL.Animations.spec.ts",
+          "line": 3,
+          "column": 5
+        }
+      ]
+    },
+    {
+      "title": "specs/planetsports/PSG.Tennis.Animations.Spec.ts",
+      "file": "specs/planetsports/PSG.Tennis.Animations.Spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "PlanetSportBet – Tennis Tab Animation Check",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 2,
+                  "status": "timedOut",
+                  "duration": 60023,
+                  "error": {
+                    "message": "\u001b[31mTest timeout of 60000ms exceeded.\u001b[39m",
+                    "stack": "\u001b[31mTest timeout of 60000ms exceeded.\u001b[39m"
+                  },
+                  "errors": [
+                    {
+                      "message": "\u001b[31mTest timeout of 60000ms exceeded.\u001b[39m"
+                    },
+                    {
+                      "location": {
+                        "file": "/Users/davidjarrett/Documents/psg-animation-tests/tests/specs/planetsports/PSG.Tennis.Animations.Spec.ts",
+                        "column": 17,
+                        "line": 79
+                      },
+                      "message": "Error: locator.scrollIntoViewIfNeeded: Target page, context or browser has been closed\n\n  77 |     } catch {}\n  78 |\n> 79 |     await event.scrollIntoViewIfNeeded();\n     |                 ^\n  80 |\n  81 |     // 5) Click and wait for navigation into the event page\n  82 |     await Promise.all([\n    at /Users/davidjarrett/Documents/psg-animation-tests/tests/specs/planetsports/PSG.Tennis.Animations.Spec.ts:79:17"
+                    }
+                  ],
+                  "stdout": [
+                    {
+                      "text": "🚀 Starting Tennis Animation Test...\n"
+                    },
+                    {
+                      "text": "✅ Popup closed\n"
+                    },
+                    {
+                      "text": "🎾 Navigating to In Play section...\n"
+                    },
+                    {
+                      "text": "🏆 Confirming we're on All Sports tab after clicking In Play...\n"
+                    },
+                    {
+                      "text": "✅ Confirmed on All Sports tab\n"
+                    },
+                    {
+                      "text": "🔍 Looking for tennis events...\n"
+                    },
+                    {
+                      "text": "📸 Screenshot saved as tennis-page-debug.png\n"
+                    },
+                    {
+                      "text": "🎾 Number of Tennis event links found: 35\n"
+                    },
+                    {
+                      "text": "📊 Checking Live tracker status for Rayo Vallecano vs Celta VigoIn Play...\n"
+                    },
+                    {
+                      "text": "✅ Live tracker already open for Rayo Vallecano vs Celta VigoIn Play\n"
+                    },
+                    {
+                      "text": "✅ Live tracker window is open for — Rayo Vallecano vs Celta VigoIn Play\n"
+                    },
+                    {
+                      "text": "✅ Found iframe inside .animated_widget for — Rayo Vallecano vs Celta VigoIn Play\n"
+                    },
+                    {
+                      "text": "⏳ Waiting for iframe src to load...\n"
+                    },
+                    {
+                      "text": "   Attempt 1/8: src = https://widgets.thesports01.com/en/3d/football?profile=v1qllh2jwioujq7&uuid=1l4rjnh9ze4zm7v\n"
+                    },
+                    {
+                      "text": "✅ PASS: Live tracker open and animation loaded for — Rayo Vallecano vs Celta VigoIn Play\n"
+                    },
+                    {
+                      "text": "🔗 Iframe src: https://widgets.thesports01.com/en/3d/football?profile=v1qllh2jwioujq7&uuid=1l4rjnh9ze4zm7v\n"
+                    },
+                    {
+                      "text": "🔄 Clicking In Play at top for event 1/35...\n"
+                    },
+                    {
+                      "text": "🏆 Confirmed back on All Sports tab\n"
+                    },
+                    {
+                      "text": "🔍 Looking for Tennis tab (may not be first in navigation bar)...\n"
+                    },
+                    {
+                      "text": "✅ Found Tennis tab using data-test-filter-key=\"tennis\"\n"
+                    },
+                    {
+                      "text": "🎾 Clicked on Tennis tab\n"
+                    },
+                    {
+                      "text": "📊 Checking Live tracker status for Taro Daniel vs Alexander ShevchenkoIn Play...\n"
+                    },
+                    {
+                      "text": "✅ Live tracker already open for Taro Daniel vs Alexander ShevchenkoIn Play\n"
+                    },
+                    {
+                      "text": "✅ Live tracker window is open for — Taro Daniel vs Alexander ShevchenkoIn Play\n"
+                    },
+                    {
+                      "text": "✅ Found iframe inside .animated_widget for — Taro Daniel vs Alexander ShevchenkoIn Play\n"
+                    },
+                    {
+                      "text": "⏳ Waiting for iframe src to load...\n"
+                    },
+                    {
+                      "text": "   Attempt 1/8: src = https://widgets.thesports01.com/en/3d/tennis?profile=8nrz3fjxda0ulm4&uuid=y0or5of9ky99mwz\n"
+                    },
+                    {
+                      "text": "✅ PASS: Live tracker open and animation loaded for — Taro Daniel vs Alexander ShevchenkoIn Play\n"
+                    },
+                    {
+                      "text": "🔗 Iframe src: https://widgets.thesports01.com/en/3d/tennis?profile=8nrz3fjxda0ulm4&uuid=y0or5of9ky99mwz\n"
+                    },
+                    {
+                      "text": "🔄 Clicking In Play at top for event 2/35...\n"
+                    },
+                    {
+                      "text": "🏆 Confirmed back on All Sports tab\n"
+                    },
+                    {
+                      "text": "🔍 Looking for Tennis tab (may not be first in navigation bar)...\n"
+                    },
+                    {
+                      "text": "✅ Found Tennis tab using data-test-filter-key=\"tennis\"\n"
+                    },
+                    {
+                      "text": "🎾 Clicked on Tennis tab\n"
+                    },
+                    {
+                      "text": "📊 Checking Live tracker status for Yibing Wu vs Daniil MedvedevIn Play...\n"
+                    },
+                    {
+                      "text": "✅ Live tracker already open for Yibing Wu vs Daniil MedvedevIn Play\n"
+                    },
+                    {
+                      "text": "✅ Live tracker window is open for — Yibing Wu vs Daniil MedvedevIn Play\n"
+                    },
+                    {
+                      "text": "✅ Found iframe inside .animated_widget for — Yibing Wu vs Daniil MedvedevIn Play\n"
+                    },
+                    {
+                      "text": "⏳ Waiting for iframe src to load...\n"
+                    },
+                    {
+                      "text": "   Attempt 1/8: src = https://widgets.thesports01.com/en/3d/tennis?profile=8nrz3fjxda0ulm4&uuid=2y8m4vfv9x10ml0\n"
+                    },
+                    {
+                      "text": "✅ PASS: Live tracker open and animation loaded for — Yibing Wu vs Daniil MedvedevIn Play\n"
+                    },
+                    {
+                      "text": "🔗 Iframe src: https://widgets.thesports01.com/en/3d/tennis?profile=8nrz3fjxda0ulm4&uuid=2y8m4vfv9x10ml0\n"
+                    },
+                    {
+                      "text": "🔄 Clicking In Play at top for event 3/35...\n"
+                    },
+                    {
+                      "text": "🏆 Confirmed back on All Sports tab\n"
+                    },
+                    {
+                      "text": "🔍 Looking for Tennis tab (may not be first in navigation bar)...\n"
+                    },
+                    {
+                      "text": "✅ Found Tennis tab using data-test-filter-key=\"tennis\"\n"
+                    },
+                    {
+                      "text": "🎾 Clicked on Tennis tab\n"
+                    },
+                    {
+                      "text": "📊 Checking Live tracker status for Polina Iatchenko vs Gabriela Andrea KnutsonIn Play...\n"
+                    },
+                    {
+                      "text": "✅ Live tracker already open for Polina Iatchenko vs Gabriela Andrea KnutsonIn Play\n"
+                    },
+                    {
+                      "text": "✅ Live tracker window is open for — Polina Iatchenko vs Gabriela Andrea KnutsonIn Play\n"
+                    },
+                    {
+                      "text": "✅ Found iframe inside .animated_widget for — Polina Iatchenko vs Gabriela Andrea KnutsonIn Play\n"
+                    },
+                    {
+                      "text": "⏳ Waiting for iframe src to load...\n"
+                    },
+                    {
+                      "text": "   Attempt 1/8: src = https://widgets.thesports01.com/en/3d/tennis?profile=8nrz3fjxda0ulm4&uuid=dj2ry1f73wz9r1z\n"
+                    },
+                    {
+                      "text": "✅ PASS: Live tracker open and animation loaded for — Polina Iatchenko vs Gabriela Andrea KnutsonIn Play\n"
+                    },
+                    {
+                      "text": "🔗 Iframe src: https://widgets.thesports01.com/en/3d/tennis?profile=8nrz3fjxda0ulm4&uuid=dj2ry1f73wz9r1z\n"
+                    },
+                    {
+                      "text": "🔄 Clicking In Play at top for event 4/35...\n"
+                    },
+                    {
+                      "text": "🏆 Confirmed back on All Sports tab\n"
+                    },
+                    {
+                      "text": "🔍 Looking for Tennis tab (may not be first in navigation bar)...\n"
+                    },
+                    {
+                      "text": "✅ Found Tennis tab using data-test-filter-key=\"tennis\"\n"
+                    },
+                    {
+                      "text": "🎾 Clicked on Tennis tab\n"
+                    },
+                    {
+                      "text": "📊 Checking Live tracker status for Dan Added vs Moez EcharguiIn Play...\n"
+                    },
+                    {
+                      "text": "✅ Live tracker already open for Dan Added vs Moez EcharguiIn Play\n"
+                    },
+                    {
+                      "text": "✅ Live tracker window is open for — Dan Added vs Moez EcharguiIn Play\n"
+                    },
+                    {
+                      "text": "✅ Found iframe inside .animated_widget for — Dan Added vs Moez EcharguiIn Play\n"
+                    },
+                    {
+                      "text": "⏳ Waiting for iframe src to load...\n"
+                    },
+                    {
+                      "text": "   Attempt 1/8: src = https://widgets.thesports01.com/en/3d/tennis?profile=8nrz3fjxda0ulm4&uuid=1l4rjwfnpv65m7v\n"
+                    },
+                    {
+                      "text": "✅ PASS: Live tracker open and animation loaded for — Dan Added vs Moez EcharguiIn Play\n"
+                    },
+                    {
+                      "text": "🔗 Iframe src: https://widgets.thesports01.com/en/3d/tennis?profile=8nrz3fjxda0ulm4&uuid=1l4rjwfnpv65m7v\n"
+                    },
+                    {
+                      "text": "🔄 Clicking In Play at top for event 5/35...\n"
+                    },
+                    {
+                      "text": "🏆 Confirmed back on All Sports tab\n"
+                    },
+                    {
+                      "text": "🔍 Looking for Tennis tab (may not be first in navigation bar)...\n"
+                    },
+                    {
+                      "text": "✅ Found Tennis tab using data-test-filter-key=\"tennis\"\n"
+                    },
+                    {
+                      "text": "🎾 Clicked on Tennis tab\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2025-09-21T12:18:55.011Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/davidjarrett/Documents/psg-animation-tests/test-results/specs-planetsports-PSG.Ten-e20fc--Tennis-Tab-Animation-Check-chromium/error-context.md"
+                    }
+                  ]
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "84bc39976fa140c9b176-a2933465bfada2d18519",
+          "file": "specs/planetsports/PSG.Tennis.Animations.Spec.ts",
+          "line": 3,
+          "column": 5
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2025-09-21T12:18:34.679Z",
+    "duration": 190980.52599999998,
+    "expected": 3,
+    "skipped": 0,
+    "unexpected": 3,
+    "flaky": 0
+  }
+}

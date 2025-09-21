@@ -1,0 +1,60 @@
+name: PSG Animation Tests - Scheduled Runs
+
+on:
+  schedule:
+    # Run at 9:00 AM, 2:00 PM, and 7:00 PM UTC daily
+    - cron: '0 9,14,19 * * *'
+  workflow_dispatch: # Allow manual triggering
+
+jobs:
+  test-and-report:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+        cache: 'npm'
+        
+    - name: Install dependencies
+      run: npm ci
+      
+    - name: Install Playwright browsers
+      run: npx playwright install --with-deps chromium
+      
+    - name: Run PSG Animation Tests
+      run: |
+        # Run all PSG tests and save results to JSON
+        npx playwright test tests/specs/planetsports/ --project=chromium --reporter=json
+        
+    - name: Generate Test Report
+      run: |
+        node scripts/generate-report.js
+        
+    - name: Send Email Report
+      if: always() # Run even if tests fail
+      uses: dawidd6/action-send-mail@v3
+      with:
+        server_address: smtp.gmail.com
+        server_port: 587
+        username: ${{ secrets.EMAIL_USERNAME }}
+        password: ${{ secrets.EMAIL_PASSWORD }}
+        subject: "PSG Animation Tests Report - ${{ github.run_number }}"
+        to: davidjarrett001@gmail.com
+        from: ${{ secrets.EMAIL_FROM }}
+        body: file://test-report-email.html
+        content_type: text/html
+        
+    - name: Upload Test Results
+      uses: actions/upload-artifact@v4
+      if: always()
+      with:
+        name: test-results-${{ github.run_number }}
+        path: |
+          test-results/
+          test-results-html/
+          test-report-email.html

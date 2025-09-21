@@ -1,17 +1,27 @@
 import { test, expect } from '@playwright/test';
 
 test('PlanetSportBet – Tennis Tab Animation Check', async ({ page }) => {
-  // 1) Land on PlanetSportBet and navigate to In Play section
+  console.log('🚀 Starting Tennis Animation Test...');
+  
+  // 1) Land on PlanetSportBet and handle initial setup
   await page.goto('https://planetsportbet.com/');
   await page.getByRole('button', { name: /Allow all/i }).click();
-  await page.locator('[data-test="landing-page"] [data-test="close-icon"] path').click();
+  
+  // Handle close icon with error handling
+  try {
+    await page.locator('[data-test="landing-page"] [data-test="close-icon"] path').click({ timeout: 3000 });
+    console.log('✅ Popup closed');
+  } catch (error) {
+    console.log('ℹ️ No popup to close');
+  }
+  
+  // 2) Navigate to In Play section
+  console.log('🎾 Navigating to In Play section...');
   await page.locator('[data-test="inplay-link"]').click();
-
-  // 2) Confirm we're on the All Sports tab after clicking In Play
-  console.log('🏆 Confirming we\'re on All Sports tab after clicking In Play...');
   await page.waitForTimeout(2000);
   
-  // Wait for All Sports button to be visible
+  // 3) Confirm we're on the All Sports tab after clicking In Play
+  console.log('🏆 Confirming we\'re on All Sports tab after clicking In Play...');
   await expect(page.locator('[data-test-filter-key="empty"]')).toBeVisible({ timeout: 5000 });
   console.log('✅ Confirmed on All Sports tab');
 
@@ -32,12 +42,6 @@ test('PlanetSportBet – Tennis Tab Animation Check', async ({ page }) => {
       console.log('❌ Could not locate Tennis tab with data-test-filter-key="tennis"');
       return false;
     }
-  }
-
-  // 3) Initial click on Tennis tab
-  const tennisTabFound = await locateAndClickTennisTab();
-  if (!tennisTabFound) {
-    throw new Error('❌ Could not locate Tennis tab in In Play section');
   }
 
   // 4) Get tennis events and count them

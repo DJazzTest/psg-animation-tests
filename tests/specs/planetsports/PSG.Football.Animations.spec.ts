@@ -20,200 +20,278 @@ test('PlanetSportBet – Football Animation Check', async ({ page }) => {
   await page.locator('[data-test="popular"]').getByRole('link', { name: 'Football' }).click();
   await page.waitForTimeout(2000);
   
-  // 3) Click on Today tab
-  console.log('📅 Clicking Today tab...');
-  await page.getByRole('button', { name: 'Today' }).click();
-  await page.waitForTimeout(2000);
+  // Define time periods to test
+  const timePeriods = ['Today', 'Tomorrow', 'Weekend', 'Current Week'];
+  const results: {event: string, result: string, timePeriod: string, league: string}[] = [];
+  let totalEventsTested = 0;
+  const maxTotalEvents = 40; // Test up to 40 events across all periods
   
-  // 4) Get football events and count them
-  console.log('🔍 Looking for football events...');
-  
-  // Take a screenshot for debugging
-  await page.screenshot({ path: 'football-page-debug.png' });
-  console.log('📸 Screenshot saved as football-page-debug.png');
-  
-  // Use the working selector from tennis test
-  const eventWrappers = page.locator('a[href*="/event/"]');
-  const count = await eventWrappers.count();
-  console.log(`⚽ Found ${count} football event links`);
-  
-  if (count === 0) {
-    console.log('❌ No football events found on Today tab');
-    return;
-  }
-  
-  try {
-    // Test first few events (max 3 to avoid timeout)
-    const maxEvents = Math.min(3, count);
-    const results: {event: string, result: string}[] = [];
+  for (const timePeriod of timePeriods) {
+    if (totalEventsTested >= maxTotalEvents) break;
     
-    for (let i = 0; i < maxEvents; i++) {
-      const event = eventWrappers.nth(i);
-      let title = `Football Event ${i + 1}`;
+    console.log(`\n🔍 Testing ${timePeriod} tab...`);
+    
+    try {
+      // Click on the time period tab
+      await page.getByRole('button', { name: timePeriod }).click();
+      await page.waitForTimeout(3000);
       
-      try {
-        // Get text content from the link
-        title = await event.textContent() || `Football Event ${i + 1}`;
-      } catch {}
+      // Get football events for this time period
+      const eventWrappers = page.locator('a[href*="/event/"]');
+      const count = await eventWrappers.count();
+      console.log(`📊 ${timePeriod} football events found: ${count}`);
       
-      console.log(`\n🎯 Testing event ${i + 1}/${maxEvents}: ${title}`);
+      if (count === 0) {
+        console.log(`ℹ️ No events in ${timePeriod} tab, skipping...`);
+        continue;
+      }
       
-      await event.scrollIntoViewIfNeeded();
+      // Test events from this time period (up to 10 per period to avoid timeout)
+      const maxEventsThisPeriod = Math.min(10, count, maxTotalEvents - totalEventsTested);
       
-      // Click on the event
-      try {
-        await Promise.all([
-          page.waitForURL(/\/event\//, { timeout: 10000 }),
-          event.click()
-        ]);
-        console.log(`✅ Successfully clicked on: ${title}`);
+      for (let i = 0; i < maxEventsThisPeriod; i++) {
+        if (totalEventsTested >= maxTotalEvents) break;
         
-        // Wait for page to load after clicking event
-        console.log(`⏳ Waiting 3 seconds for page to load...`);
-        await page.waitForTimeout(3000);
+        const event = eventWrappers.nth(i);
+        let title = `Football Event ${i + 1}`;
+        let league = 'Unknown League';
         
-        // Check if Live tracker is already open, if not click to open it
-        console.log(`📊 Checking Live tracker status for ${title}...`);
-        let liveTrackerOpen = false;
-        let liveTrackerClicked = false;
-        
-        // First check if animated_widget is already visible (Live tracker already open)
         try {
-          await page.waitForSelector('.animated_widget', {
-            state: 'visible',
-            timeout: 2000
-          });
-          liveTrackerOpen = true;
-          console.log(`✅ Live tracker already open for ${title}`);
-        } catch {
-          console.log(`ℹ️ Live tracker not open, attempting to click...`);
+          // Get text content from the link
+          title = await event.textContent() || `Football Event ${i + 1}`;
           
-          // If not open, try to click the Live tracker button
-          try {
-            await page.getByRole('heading', { name: 'Live tracker' }).click({ timeout: 5000 });
-            console.log(`✅ Live tracker clicked for ${title}`);
-            liveTrackerClicked = true;
-            await page.waitForTimeout(2000);
-          } catch (error) {
-          console.log(`❌ FAIL: Could not find Live tracker button for — ${title}`);
-          console.log(`   🔴 Description: Live tracker button not found or not clickable`);
-          console.log(`   📝 Reason: Match may not have live tracking available or page not fully loaded`);
-          console.log(`   ⚽ Match: ${title}`);
-          console.log(`   🏆 Competition: Various Football Leagues`);
-          console.log(`   🔧 Technical: ${error.message}`);
-          }
-        }
+          // Extract league information from the title
+          if (title.includes('Premier League') || title.includes('EPL')) league = 'English Premier League';
+          else if (title.includes('Championship')) league = 'English Championship';
+          else if (title.includes('League One')) league = 'English League One';
+          else if (title.includes('League Two')) league = 'English League Two';
+          else if (title.includes('La Liga') || title.includes('Primera Division')) league = 'Spanish La Liga';
+          else if (title.includes('Serie A')) league = 'Italian Serie A';
+          else if (title.includes('Bundesliga')) league = 'German Bundesliga';
+          else if (title.includes('Ligue 1')) league = 'French Ligue 1';
+          else if (title.includes('Champions League')) league = 'UEFA Champions League';
+          else if (title.includes('Europa League')) league = 'UEFA Europa League';
+          else if (title.includes('FA Cup')) league = 'FA Cup';
+          else if (title.includes('Carabao Cup')) league = 'Carabao Cup';
+          else if (title.includes('EFL Cup')) league = 'EFL Cup';
+          else if (title.includes('Community Shield')) league = 'Community Shield';
+          else if (title.includes('Super Cup')) league = 'Super Cup';
+          else if (title.includes('World Cup')) league = 'FIFA World Cup';
+          else if (title.includes('Euro')) league = 'UEFA European Championship';
+          else if (title.includes('Nations League')) league = 'UEFA Nations League';
+          else if (title.includes('Friendly')) league = 'International Friendly';
+          else league = 'Other Competition';
+          
+        } catch {}
         
-        // Wait for animated widget with longer delay to see animations
-        let animPassed = false;
+        console.log(`\n🎯 Testing event ${totalEventsTested + 1}/${maxTotalEvents}: ${title} (${timePeriod})`);
+        console.log(`🏆 League: ${league}`);
         
-        if (liveTrackerOpen || liveTrackerClicked) {
+        await event.scrollIntoViewIfNeeded();
+        
+        // Click on the event
+        try {
+          await Promise.all([
+            page.waitForURL(/\/event\//, { timeout: 10000 }),
+            event.click()
+          ]);
+          console.log(`✅ Successfully clicked on: ${title}`);
+          
+          // Wait for page to load after clicking event
+          console.log(`⏳ Waiting 3 seconds for page to load...`);
+          await page.waitForTimeout(3000);
+          
+          // Check if Live tracker is already open, if not click to open it
+          console.log(`📊 Checking Live tracker status for ${title}...`);
+          let liveTrackerOpen = false;
+          let liveTrackerClicked = false;
+          
+          // First check if animated_widget is already visible (Live tracker already open)
           try {
-            console.log(`🎬 Looking for animated_widget iframe for ${title}...`);
-            
-            // Wait for the specific animated widget div to appear
             await page.waitForSelector('.animated_widget', {
               state: 'visible',
-              timeout: 15000
+              timeout: 2000
             });
-            console.log(`✅ Found .animated_widget div`);
+            liveTrackerOpen = true;
+            console.log(`✅ Live tracker already open for ${title}`);
+          } catch {
+            console.log(`ℹ️ Live tracker not open, attempting to click...`);
             
-            // Wait for the iframe inside the animated_widget
-            await page.waitForSelector('.animated_widget iframe', {
-              state: 'visible',
-              timeout: 10000
-            });
-            console.log(`✅ Found iframe inside .animated_widget`);
+            // If not open, try to click the Live tracker button
+            try {
+              await page.getByRole('heading', { name: 'Live tracker' }).click({ timeout: 5000 });
+              console.log(`✅ Live tracker clicked for ${title}`);
+              liveTrackerClicked = true;
+              await page.waitForTimeout(2000);
+            } catch (error) {
+              console.log(`❌ FAIL: Could not find Live tracker button for — ${title}`);
+              console.log(`   🔴 Description: Live tracker button not found or not clickable`);
+              console.log(`   📝 Reason: Match may not have live tracking available or page not fully loaded`);
+              console.log(`   ⚽ Match: ${title}`);
+              console.log(`   🏆 Competition: ${league}`);
+              console.log(`   📅 Time Period: ${timePeriod}`);
+              console.log(`   🔧 Technical: ${error.message}`);
+            }
+          }
           
-          // Verify the iframe has the correct src pattern
-          const iframe = page.locator('.animated_widget iframe');
-          const iframeSrc = await iframe.getAttribute('src');
-          console.log(`🔗 Iframe src: ${iframeSrc}`);
+          // Wait for animated widget with longer delay to see animations
+          let animPassed = false;
           
-          // Check if the iframe is actually visible and has content
-          const isIframeVisible = await iframe.isVisible();
-          const iframeContent = await iframe.contentFrame();
-          
-          if (iframeSrc && iframeSrc.includes('widgets.thesports01.com') && isIframeVisible) {
-            animPassed = true;
-            console.log(`✅ PASS: animated_widget iframe found with correct src and is visible for — ${title}`);
+          if (liveTrackerOpen || liveTrackerClicked) {
+            try {
+              console.log(`🎬 Looking for animated_widget iframe for ${title}...`);
+              
+              // Wait for the specific animated widget div to appear
+              await page.waitForSelector('.animated_widget', {
+                state: 'visible',
+                timeout: 15000
+              });
+              console.log(`✅ Found .animated_widget div`);
+              
+              // Wait for the iframe inside the animated_widget
+              await page.waitForSelector('.animated_widget iframe', {
+                state: 'visible',
+                timeout: 10000
+              });
+              console.log(`✅ Found iframe inside .animated_widget`);
             
-            // Additional verification - check if iframe has content
-            if (iframeContent) {
-              console.log(`✅ PASS: iframe content frame is accessible`);
+            // Verify the iframe has the correct src pattern with retry logic
+            const iframe = page.locator('.animated_widget iframe');
+            let iframeSrc = await iframe.getAttribute('src');
+            let attempts = 0;
+            const maxAttempts = 8;
+            
+            // Retry getting the src attribute as it loads asynchronously
+            while (attempts < maxAttempts && (!iframeSrc || !iframeSrc.includes('widgets.thesports01.com'))) {
+              attempts++;
+              console.log(`   Attempt ${attempts}/${maxAttempts}: src = ${iframeSrc || 'undefined'}`);
+              await page.waitForTimeout(1000);
+              iframeSrc = await iframe.getAttribute('src');
+            }
+            
+            console.log(`🔗 Iframe src: ${iframeSrc}`);
+            
+            // Check if the iframe is actually visible and has content
+            const isIframeVisible = await iframe.isVisible();
+            const iframeContent = await iframe.contentFrame();
+            
+            if (iframeSrc && iframeSrc.includes('widgets.thesports01.com') && isIframeVisible) {
+              animPassed = true;
+              console.log(`✅ PASS: animated_widget iframe found with correct src and is visible for — ${title}`);
+              
+              // Additional verification - check if iframe has content
+              if (iframeContent) {
+                console.log(`✅ PASS: iframe content frame is accessible`);
+              } else {
+                console.log(`⚠️ WARNING: iframe content frame not accessible (may be cross-origin)`);
+              }
             } else {
-              console.log(`⚠️ WARNING: iframe content frame not accessible (may be cross-origin)`);
+              console.log(`❌ FAIL: Live tracker expanded but no animation for — ${title}`);
+              console.log(`   🔴 Description: Live tracker window expanded but animation iframe failed to load`);
+              console.log(`   📝 Reason: iframe src is missing or incorrect (src: ${iframeSrc}, visible: ${isIframeVisible})`);
+              console.log(`   ⚽ Match: ${title}`);
+              console.log(`   🏆 Competition: ${league}`);
+              console.log(`   📅 Time Period: ${timePeriod}`);
+              console.log(`   🔧 Technical: Src contains widgets.thesports01.com: ${iframeSrc?.includes('widgets.thesports01.com')}`);
+            }
+            
+            // Wait to see the animation load and play
+            console.log(`⏳ Waiting 5 seconds to observe 3D football animation...`);
+            await page.waitForTimeout(5000);
+            
+            } catch (error) {
+              console.log(`❌ FAIL: no animated_widget iframe found for — ${title}`);
+              console.log(`   🔴 Description: Live tracker open but animated widget window not accessible`);
+              console.log(`   📝 Reason: This typically indicates a suspended/inactive match or technical issue`);
+              console.log(`   ⚽ Match: ${title}`);
+              console.log(`   🏆 Competition: ${league}`);
+              console.log(`   📅 Time Period: ${timePeriod}`);
+              console.log(`   🔧 Technical: ${error.message}`);
             }
           } else {
-            console.log(`❌ FAIL: Live tracker expanded but no animation for — ${title}`);
-            console.log(`   🔴 Description: Live tracker window expanded but animation iframe failed to load`);
-            console.log(`   📝 Reason: iframe src is missing or incorrect (src: ${iframeSrc}, visible: ${isIframeVisible})`);
+            console.log(`❌ FAIL: Live tracker not accessible for — ${title}`);
+            console.log(`   🔴 Description: Live tracker not found or not clickable`);
+            console.log(`   📝 Reason: Match may not have live tracking available`);
             console.log(`   ⚽ Match: ${title}`);
-            console.log(`   🏆 Competition: Various Football Leagues`);
-            console.log(`   🔧 Technical: Src contains widgets.thesports01.com: ${iframeSrc?.includes('widgets.thesports01.com')}`);
+            console.log(`   🏆 Competition: ${league}`);
+            console.log(`   📅 Time Period: ${timePeriod}`);
           }
           
-          // Wait longer to see the animation load and play
-          console.log(`⏳ Waiting 10 seconds to observe 3D football animation...`);
-          await page.waitForTimeout(10000);
+          results.push({ 
+            event: title, 
+            result: animPassed ? 'PASS' : 'FAIL', 
+            timePeriod: timePeriod,
+            league: league
+          });
           
-          } catch (error) {
-            console.log(`❌ FAIL: no animated_widget iframe found for — ${title}`);
-            console.log(`   🔴 Description: Live tracker open but animated widget window not accessible`);
-            console.log(`   📝 Reason: This typically indicates a suspended/inactive match or technical issue`);
-            console.log(`   ⚽ Match: ${title}`);
-            console.log(`   🏆 Competition: Various Football Leagues`);
-            console.log(`   🔧 Technical: ${error.message}`);
-          }
-        } else {
-          console.log(`❌ FAIL: Live tracker not accessible for — ${title}`);
-          console.log(`   🔴 Description: Live tracker not found or not clickable`);
-          console.log(`   📝 Reason: Match may not have live tracking available`);
-          console.log(`   ⚽ Match: ${title}`);
-          console.log(`   🏆 Competition: Various Football Leagues`);
+          totalEventsTested++;
+          
+          // Go back to football page
+          console.log(`🔄 Going back to Football page...`);
+          await page.locator('[data-test="popular"]').getByRole('link', { name: 'Football' }).click();
+          await page.waitForTimeout(3000);
+          
+          // Click the same time period tab again
+          console.log(`📅 Clicking ${timePeriod} tab again...`);
+          await page.getByRole('button', { name: timePeriod }).click();
+          await page.waitForTimeout(3000);
+          
+          // Ensure events are visible again
+          await expect(eventWrappers.first()).toBeVisible({ timeout: 10000 });
+          
+        } catch (error) {
+          console.log(`❌ Failed to test event: ${title} - ${error.message}`);
+          results.push({ 
+            event: title, 
+            result: 'ERROR', 
+            timePeriod: timePeriod,
+            league: league
+          });
+          totalEventsTested++;
         }
-        
-        results.push({ event: title, result: animPassed ? 'PASS' : 'FAIL' });
-        
-        // Go back to football page
-        console.log(`🔄 Going back to Football page...`);
-        await page.locator('[data-test="popular"]').getByRole('link', { name: 'Football' }).click();
-        await page.waitForTimeout(3000);
-        
-        // Click Today tab again
-        console.log(`📅 Clicking Today tab again...`);
-        await page.getByRole('button', { name: 'Today' }).click();
-        await page.waitForTimeout(3000);
-        
-        // Ensure events are visible again
-        await expect(eventWrappers.first()).toBeVisible({ timeout: 10000 });
-        
-      } catch (error) {
-        console.log(`❌ Failed to test event: ${title} - ${error.message}`);
-        results.push({ event: title, result: 'ERROR' });
       }
+      
+    } catch (error) {
+      console.log(`❌ Error testing ${timePeriod} tab: ${error.message}`);
     }
-    
-    // Generate report
-    console.log('\n🧪 === FOOTBALL ANIMATION TEST RESULTS ===');
-    const passCount = results.filter(r => r.result === 'PASS').length;
-    const failCount = results.filter(r => r.result === 'FAIL').length;
-    const errorCount = results.filter(r => r.result === 'ERROR').length;
-    const passRate = maxEvents > 0 ? Math.round((passCount / maxEvents) * 100) : 0;
-    
-    console.log(`📊 Total Football Events Tested: ${maxEvents}`);
-    console.log(`✅ Events with Animations (PASS): ${passCount}`);
-    console.log(`❌ Events without Animations (FAIL): ${failCount}`);
-    console.log(`🚨 Events with Errors (ERROR): ${errorCount}`);
-    console.log(`📈 Animation Success Rate: ${passRate}%`);
-    
-    console.log('\n📋 === DETAILED RESULTS ===');
-    results.forEach(r => console.log(`${r.result}: ${r.event}`));
-    
-  } catch (error) {
-    console.log('❌ Could not find football events or navigate properly');
-    console.log('Error:', error.message);
   }
+  
+  // Generate comprehensive report
+  console.log('\n🧪 === FOOTBALL ANIMATION TEST RESULTS ===');
+  const passCount = results.filter(r => r.result === 'PASS').length;
+  const failCount = results.filter(r => r.result === 'FAIL').length;
+  const errorCount = results.filter(r => r.result === 'ERROR').length;
+  const passRate = totalEventsTested > 0 ? Math.round((passCount / totalEventsTested) * 100) : 0;
+  
+  console.log(`📊 Total Football Events Tested: ${totalEventsTested}`);
+  console.log(`✅ Events with Animations (PASS): ${passCount}`);
+  console.log(`❌ Events without Animations (FAIL): ${failCount}`);
+  console.log(`🚨 Events with Errors (ERROR): ${errorCount}`);
+  console.log(`📈 Animation Success Rate: ${passRate}%`);
+  
+  // Report by time period
+  console.log('\n📅 === RESULTS BY TIME PERIOD ===');
+  timePeriods.forEach(period => {
+    const periodResults = results.filter(r => r.timePeriod === period);
+    const periodPass = periodResults.filter(r => r.result === 'PASS').length;
+    const periodTotal = periodResults.length;
+    const periodRate = periodTotal > 0 ? Math.round((periodPass / periodTotal) * 100) : 0;
+    console.log(`${period}: ${periodPass}/${periodTotal} (${periodRate}%)`);
+  });
+  
+  // Report by league
+  console.log('\n🏆 === RESULTS BY LEAGUE ===');
+  const leagues = [...new Set(results.map(r => r.league))];
+  leagues.forEach(league => {
+    const leagueResults = results.filter(r => r.league === league);
+    const leaguePass = leagueResults.filter(r => r.result === 'PASS').length;
+    const leagueTotal = leagueResults.length;
+    const leagueRate = leagueTotal > 0 ? Math.round((leaguePass / leagueTotal) * 100) : 0;
+    console.log(`${league}: ${leaguePass}/${leagueTotal} (${leagueRate}%)`);
+  });
+  
+  console.log('\n📋 === DETAILED RESULTS ===');
+  results.forEach(r => console.log(`${r.result}: ${r.event} (${r.timePeriod}, ${r.league})`));
   
   console.log('\n🏁 Football Animation Test completed!');
 });
