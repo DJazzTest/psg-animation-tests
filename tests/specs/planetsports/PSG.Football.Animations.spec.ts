@@ -317,3 +317,4 @@ test('PlanetSportBet – Football Animation Check', async ({ page }) => {
       fs.writeFileSync('football-events-results.json', JSON.stringify(eventResults, null, 2));
       console.log('📄 Individual event results saved to football-events-results.json');
     });
+# PSG Football Test - Sun Sep 21 17:18:46 BST 2025
