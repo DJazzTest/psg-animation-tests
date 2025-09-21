@@ -54,7 +54,7 @@ jobs:
         node scripts/generate-report.js || echo "Report generation completed with issues"
         
     - name: Send Email Report
-      if: always() # Run even if tests fail
+      if: always() && secrets.EMAIL_USERNAME != '' # Only run if email secrets are set
       uses: dawidd6/action-send-mail@v3
       with:
         server_address: smtp.gmail.com
@@ -65,6 +65,15 @@ jobs:
         to: davidjarrett001@gmail.com
         from: davidjarrett001@gmail.com
         body: file://test-report-email.html
+        
+    - name: Email Setup Required
+      if: always() && secrets.EMAIL_USERNAME == ''
+      run: |
+        echo "⚠️ Email notifications not configured. To enable:"
+        echo "1. Go to Repository Settings > Secrets and variables > Actions"
+        echo "2. Add EMAIL_USERNAME: davidjarrett001@gmail.com"
+        echo "3. Add EMAIL_PASSWORD: [Gmail App Password]"
+        echo "4. Re-run this workflow"
         
     - name: Upload Test Results
       uses: actions/upload-artifact@v4

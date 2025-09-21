@@ -1,4 +1,4 @@
-name: PSG Animation Tests - Scheduled Runs
+name: PSG & StarSports Animation Tests - Scheduled Runs
 
 on:
   schedule:
@@ -26,28 +26,36 @@ jobs:
     - name: Install Playwright browsers
       run: npx playwright install --with-deps chromium
       
-    - name: Run PSG Animation Tests
+    - name: Run PSG & StarSports Animation Tests
       run: |
-        # Run all PSG tests and save results to JSON
-        npx playwright test tests/specs/planetsports/ --project=chromium --reporter=json
+        # Run all PSG and StarSports tests and save results to JSON
+        npx playwright test tests/specs/planetsports/ tests/specs/starsports/ --project=chromium --reporter=json
         
     - name: Generate Test Report
       run: |
         node scripts/generate-report.js
         
     - name: Send Email Report
-      if: always() # Run even if tests fail
+      if: always() && secrets.EMAIL_USERNAME != '' # Only run if email secrets are set
       uses: dawidd6/action-send-mail@v3
       with:
         server_address: smtp.gmail.com
         server_port: 587
         username: ${{ secrets.EMAIL_USERNAME }}
         password: ${{ secrets.EMAIL_PASSWORD }}
-        subject: "PSG Animation Tests Report - ${{ github.run_number }}"
+        subject: "PSG & StarSports Animation Tests Report - ${{ github.run_number }}"
         to: davidjarrett001@gmail.com
-        from: ${{ secrets.EMAIL_FROM }}
+        from: davidjarrett001@gmail.com
         body: file://test-report-email.html
-        content_type: text/html
+        
+    - name: Email Setup Required
+      if: always() && secrets.EMAIL_USERNAME == ''
+      run: |
+        echo "⚠️ Email notifications not configured. To enable:"
+        echo "1. Go to Repository Settings > Secrets and variables > Actions"
+        echo "2. Add EMAIL_USERNAME: davidjarrett001@gmail.com"
+        echo "3. Add EMAIL_PASSWORD: [Gmail App Password]"
+        echo "4. Re-run this workflow"
         
     - name: Upload Test Results
       uses: actions/upload-artifact@v4
