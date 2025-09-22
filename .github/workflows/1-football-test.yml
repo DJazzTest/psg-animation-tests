@@ -1,0 +1,47 @@
+name: 1-football-test
+
+on:
+  workflow_dispatch:
+
+jobs:
+  psg-football:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+        cache: 'npm'
+
+    - name: Install dependencies
+      run: npm ci
+
+    - name: Install Playwright browsers
+      run: npx playwright install --with-deps chromium
+
+    - name: Run PSG Football Test (uses config reporters)
+      run: npx playwright test tests/specs/planetsports/PSG.Football.Animations.spec.ts --project=chromium
+      env:
+        CI: true
+
+    - name: Also produce raw JSON output
+      run: npx playwright test tests/specs/planetsports/PSG.Football.Animations.spec.ts --project=chromium --reporter=json > test-results-json.json || true
+
+    - name: Upload HTML report
+      if: always()
+      uses: actions/upload-artifact@v4
+      with:
+        name: football-html-report
+        path: test-results-html/
+
+    - name: Upload JSON output
+      if: always()
+      uses: actions/upload-artifact@v4
+      with:
+        name: football-json-output
+        path: test-results-json.json
+        if-no-files-found: ignore
