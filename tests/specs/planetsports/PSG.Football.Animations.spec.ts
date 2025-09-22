@@ -1,6 +1,8 @@
 import { test, expect } from '@playwright/test';
 
 test('PlanetSportBet – Football Animation Check', async ({ page }) => {
+  // Allow extra time in CI where pages can be slower
+  test.setTimeout(300000);
   console.log('🚀 Starting Football Animation Test...');
   
   // 1) Land on PlanetSportBet and handle initial setup
@@ -317,4 +319,3 @@ test('PlanetSportBet – Football Animation Check', async ({ page }) => {
       fs.writeFileSync('football-events-results.json', JSON.stringify(eventResults, null, 2));
       console.log('📄 Individual event results saved to football-events-results.json');
     });
-# PSG Football Test - Sun Sep 21 17:18:46 BST 2025
