@@ -1,0 +1,30 @@
+stages:
+  - test
+
+default:
+  image: mcr.microsoft.com/playwright:v1.54.1-jammy
+  cache:
+    key: ${CI_COMMIT_REF_SLUG}
+    paths:
+      - node_modules/
+  before_script:
+    - node -v
+    - npm -v
+    - npm ci
+    - npx playwright install --with-deps chromium
+
+football_test:
+  stage: test
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "push"
+  script:
+    - echo "Running PSG Football test..."
+    - npx playwright test tests/specs/planetsports/PSG.Football.Animations.spec.ts --project=chromium --reporter=list,html || true
+    - npx playwright test tests/specs/planetsports/PSG.Football.Animations.spec.ts --project=chromium --reporter=json > test-results-json.json || true
+  artifacts:
+    when: always
+    expire_in: 7 days
+    paths:
+      - test-results-html/
+      - test-results-json.json
+      - playwright-report/**/trace.zip
