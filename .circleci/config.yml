@@ -1,123 +1,15 @@
-version: 2.1
+stages:
+  - test
 
-executors:
-  playwright:
-    docker:
-      - image: mcr.microsoft.com/playwright:v1.43.1-jammy
-
-jobs:
-  setup:
-    executor: playwright
-    steps:
-      - checkout
-      - run: echo "Initial setup - install, prepare, etc."
-
-  planetsport:
-    executor: playwright
-    steps:
-      - checkout
-      - run: npm ci
-      - run:
-          name: Run planetsport tests
-          command: |
-            npx playwright test tests/tests/Planetsport-automation.spec.ts tests/e2e/planetsportgroup/automation.spec.ts
-
-  planetsportbet_cricket:
-    executor: playwright
-    steps:
-      - checkout
-      - run: npm ci
-      - run:
-          name: Run cricket tests
-          command: |
-            npx playwright test tests/tests/planetsportbet-cricket.spec.ts tests/e2e/planetsportgroup/cricket.spec.ts
-
-  planetsportbet_football:
-    executor: playwright
-    steps:
-      - checkout
-      - run: npm ci
-      - run:
-          name: Run football tests
-          command: |
-            npx playwright test tests/tests/PlanetSportbet-football.spec.ts tests/e2e/planetsportgroup/football.spec.ts
-
-  planetsportbet_tennis:
-    executor: playwright
-    steps:
-      - checkout
-      - run: npm ci
-      - run:
-          name: Run tennis tests
-          command: |
-            npx playwright test tests/tests/planetsportbet-tennis.spec.ts tests/e2e/planetsportgroup/tennis.spec.ts
-
-  planetsport_animation:
-    executor: playwright
-    steps:
-      - checkout
-      - run: npm ci
-      - run:
-          name: Run animation widget tests
-          command: |
-            npx playwright test tests/e2e/planetsportgroup/animation-widget.spec.ts
-
-  starsports_inplay:
-    executor: playwright
-    steps:
-      - checkout
-      - run: npm ci
-      - run:
-          name: Run Starsports in-play tests
-          command: |
-            npx playwright test tests/tests/starsports-all-InPlay-automationtest.spec.ts tests/e2e/starsports/inplay-automation.spec.ts
-
-  teamtalk_website:
-    executor: playwright
-    steps:
-      - checkout
-      - run: npm ci
-      - run:
-          name: Run TeamTalk tests
-          command: |
-            npx playwright test tests/e2e/teamtalk/website.spec.ts
-
-  common_navigation:
-    executor: playwright
-    steps:
-      - checkout
-      - run: npm ci
-      - run:
-          name: Run common navigation tests
-          command: |
-            npx playwright test tests/inPlayJourney.spec.ts tests/e2e/common/navigation.spec.ts
-
-workflows:
-  version: 2
-  test-suite:
-    jobs:
-      - setup
-      - planetsport:
-          requires:
-            - setup
-      - planetsportbet_cricket:
-          requires:
-            - setup
-      - planetsportbet_football:
-          requires:
-            - setup
-      - planetsportbet_tennis:
-          requires:
-            - setup
-      - planetsport_animation:
-          requires:
-            - setup
-      - starsports_inplay:
-          requires:
-            - setup
-      - teamtalk_website:
-          requires:
-            - setup
-      - common_navigation:
-          requires:
-            - setup
+test_job:
+  stage: test
+  image: mcr.microsoft.com/playwright:v1.43.1-jammy
+  script:
+    - npm ci
+    - npx playwright install
+    - npx playwright test
+  artifacts:
+    paths:
+      - test-results-html
+    expire_in: 1 week
+  when: always
