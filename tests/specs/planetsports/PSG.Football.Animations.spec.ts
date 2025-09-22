@@ -8,7 +8,28 @@ test('PlanetSportBet – Football Animation Check', async ({ page }) => {
   
   // 1) Land on PlanetSportBet and handle initial setup
   await page.goto('https://planetsportbet.com/');
-  await page.getByRole('button', { name: /Allow all/i }).click();
+  // Robust cookie consent handling (button may vary or be absent)
+  try {
+    const allowAll = page.getByRole('button', { name: /allow all|accept all|agree|ok/i });
+    await allowAll.waitFor({ state: 'visible', timeout: 8000 });
+    await allowAll.click({ timeout: 8000 });
+    console.log('✅ Cookie consent accepted');
+  } catch {
+    try {
+      // Fallback selectors
+      const fallback = page.locator(
+        'button:has-text("Allow All"), button:has-text("Accept all"), button:has-text("OK"), [data-test*="cookie"][data-test*="accept"]'
+      );
+      if (await fallback.first().isVisible({ timeout: 2000 }).catch(() => false)) {
+        await fallback.first().click({ timeout: 5000 });
+        console.log('✅ Cookie consent accepted (fallback)');
+      } else {
+        console.log('ℹ️ Cookie banner not present');
+      }
+    } catch {
+      console.log('ℹ️ "Allow all" button not found, continuing...');
+    }
+  }
   
   // Handle close icon with error handling
   try {
