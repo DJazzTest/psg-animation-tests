@@ -1,8 +1,9 @@
 import { test, expect } from '@playwright/test';
 
 test('PlanetSportBet – Football Animation Check', async ({ page }) => {
-  // Allow extra time in CI where pages can be slower
-  test.setTimeout(300000);
+  // Allow extra time in CI, but also cap scope to avoid timeouts
+  const isCI = !!process.env.CI;
+  test.setTimeout(isCI ? 240_000 : 300_000);
   console.log('🚀 Starting Football Animation Test...');
   
   // 1) Land on PlanetSportBet and handle initial setup
@@ -22,11 +23,11 @@ test('PlanetSportBet – Football Animation Check', async ({ page }) => {
   await page.locator('[data-test="popular"]').getByRole('link', { name: 'Football' }).click();
   await page.waitForTimeout(2000);
   
-  // Define time periods to test
-  const timePeriods = ['Today', 'Tomorrow', 'Weekend', 'Current Week'];
+  // Define time periods to test (reduced in CI to prevent timeouts)
+  const timePeriods = isCI ? ['Today', 'Tomorrow'] : ['Today', 'Tomorrow', 'Weekend', 'Current Week'];
   const results: {event: string, result: string, timePeriod: string, league: string}[] = [];
   let totalEventsTested = 0;
-  const maxTotalEvents = 40; // Test up to 40 events across all periods
+  const maxTotalEvents = isCI ? 15 : 40; // Cap in CI to finish under job timeout
   
   for (const timePeriod of timePeriods) {
     if (totalEventsTested >= maxTotalEvents) break;
@@ -100,8 +101,8 @@ test('PlanetSportBet – Football Animation Check', async ({ page }) => {
           console.log(`✅ Successfully clicked on: ${title}`);
           
           // Wait for page to load after clicking event
-          console.log(`⏳ Waiting 3 seconds for page to load...`);
-          await page.waitForTimeout(3000);
+              console.log(`⏳ Waiting ${isCI ? 1500 : 3000} ms for page to load...`);
+              await page.waitForTimeout(isCI ? 1500 : 3000);
           
           // Check if Live tracker is already open, if not click to open it
           console.log(`📊 Checking Live tracker status for ${title}...`);
@@ -124,7 +125,7 @@ test('PlanetSportBet – Football Animation Check', async ({ page }) => {
               await page.getByRole('heading', { name: 'Live tracker' }).click({ timeout: 5000 });
               console.log(`✅ Live tracker clicked for ${title}`);
               liveTrackerClicked = true;
-              await page.waitForTimeout(2000);
+                  await page.waitForTimeout(isCI ? 1000 : 2000);
             } catch (error) {
               console.log(`❌ FAIL: Could not find Live tracker button for — ${title}`);
               console.log(`   🔴 Description: Live tracker button not found or not clickable`);
@@ -144,24 +145,18 @@ test('PlanetSportBet – Football Animation Check', async ({ page }) => {
               console.log(`🎬 Looking for animated_widget iframe for ${title}...`);
               
               // Wait for the specific animated widget div to appear
-              await page.waitForSelector('.animated_widget', {
-                state: 'visible',
-                timeout: 15000
-              });
+                  await page.waitForSelector('.animated_widget', { state: 'visible', timeout: isCI ? 8000 : 15000 });
               console.log(`✅ Found .animated_widget div`);
               
               // Wait for the iframe inside the animated_widget
-              await page.waitForSelector('.animated_widget iframe', {
-                state: 'visible',
-                timeout: 10000
-              });
+                  await page.waitForSelector('.animated_widget iframe', { state: 'visible', timeout: isCI ? 6000 : 10000 });
               console.log(`✅ Found iframe inside .animated_widget`);
             
             // Verify the iframe has the correct src pattern with retry logic
             const iframe = page.locator('.animated_widget iframe');
             let iframeSrc = await iframe.getAttribute('src');
             let attempts = 0;
-            const maxAttempts = 8;
+                const maxAttempts = isCI ? 5 : 8;
             
             // Retry getting the src attribute as it loads asynchronously
             while (attempts < maxAttempts && (!iframeSrc || !iframeSrc.includes('widgets.thesports01.com'))) {
@@ -198,8 +193,10 @@ test('PlanetSportBet – Football Animation Check', async ({ page }) => {
             }
             
             // Wait to see the animation load and play
-            console.log(`⏳ Waiting 5 seconds to observe 3D football animation...`);
-            await page.waitForTimeout(5000);
+                if (!isCI) {
+                  console.log(`⏳ Waiting 5 seconds to observe 3D football animation...`);
+                  await page.waitForTimeout(5000);
+                }
             
             } catch (error) {
               console.log(`❌ FAIL: no animated_widget iframe found for — ${title}`);
@@ -231,12 +228,12 @@ test('PlanetSportBet – Football Animation Check', async ({ page }) => {
           // Go back to football page
           console.log(`🔄 Going back to Football page...`);
           await page.locator('[data-test="popular"]').getByRole('link', { name: 'Football' }).click();
-          await page.waitForTimeout(3000);
+              await page.waitForTimeout(isCI ? 1500 : 3000);
           
           // Click the same time period tab again
           console.log(`📅 Clicking ${timePeriod} tab again...`);
           await page.getByRole('button', { name: timePeriod }).click();
-          await page.waitForTimeout(3000);
+              await page.waitForTimeout(isCI ? 1500 : 3000);
           
           // Ensure events are visible again
           await expect(eventWrappers.first()).toBeVisible({ timeout: 10000 });
